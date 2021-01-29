@@ -10,6 +10,7 @@ const {
 } = require('@frenchpastries/assemble')
 const { client, connect } = require('./db')
 const { projectContext } = require('./project')
+const { workedTimeContext } = require('./workedTime')
 
 connect()
 
@@ -18,6 +19,7 @@ const ok = () => response('OK')
 const handler = Assemble.routes([
   get('/', ok),
   projectContext,
+  workedTimeContext,
   notFound(() => ({ statusCode: 404 })),
 ])
 

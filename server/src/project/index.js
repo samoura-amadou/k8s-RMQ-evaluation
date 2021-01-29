@@ -1,9 +1,9 @@
+const { get, post, context } = require('@frenchpastries/assemble')
 const {
   createOrUpdateProjectHandler,
   getProjectHandler,
   listProjectByOwnerHandler,
 } = require('./handlers')
-const { get, post, context } = require('@frenchpastries/assemble')
 
 const projectContext = context('/project', [
   get('/', getProjectHandler),
