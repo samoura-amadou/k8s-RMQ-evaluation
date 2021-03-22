@@ -4,8 +4,14 @@ const { log } = require('../utils/logger')
 const { loginHandler } = require('./handler')
 const { response } = require('@frenchpastries/millefeuille/response')
 
-const routes = context('/auth', [get('/', () => response('ok'))])
+//for jwt testing purpose, might delete it later idk
+const authContext = context('/auth', [
+  get('/login', request => {
+    log(request.decoded)
+    return response('ok')
+  }),
+])
 
 module.exports = {
-  routes,
+  authContext,
 }

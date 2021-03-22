@@ -12,7 +12,8 @@ const { client, connect } = require('./db')
 const { projectContext } = require('./project')
 const { workedTimeContext } = require('./workedTime')
 const { cors } = require('./middleware/cors')
-const { routes } = require('./auth')
+const { guardAuth, parseAuth } = require('./middleware/auth')
+const { authContext } = require('./auth')
 const { log } = require('./utils/logger')
 
 connect()
@@ -21,7 +22,7 @@ const ok = () => response('OK')
 
 const handler = Assemble.routes([
   get('/', ok),
-  routes,
+  authContext,
   projectContext,
   workedTimeContext,
   notFound(() => ({ statusCode: 404 })),
@@ -29,7 +30,13 @@ const handler = Assemble.routes([
 
 MilleFeuille.create(
   cors(
-    Arrange.jsonBody(Arrange.jsonContentType(Arrange.parseJSONBody(handler)))
+    parseAuth(
+      guardAuth(
+        Arrange.jsonBody(
+          Arrange.jsonContentType(Arrange.parseJSONBody(handler))
+        )
+      )
+    )
   ),
   { port: process.env.PORT }
 )
