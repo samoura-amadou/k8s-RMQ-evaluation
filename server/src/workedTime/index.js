@@ -5,13 +5,14 @@ const {
   getWorkTimeHandler,
   listWorkTimeHandler,
 } = require('./handlers')
+const { guardAuth } = require('../middleware/auth')
 
 const workedTimeContext = context('/worked-time', [
-  get('/', getWorkTimeHandler),
-  get('/all', listWorkTimeHandler),
-  get('/project', listWorkTimeByProjectHandler),
-  post('/create', createOrUpdateWorkTimeHandler),
-  post('/update', createOrUpdateWorkTimeHandler),
+  get('/', guardAuth(getWorkTimeHandler)),
+  get('/all', guardAuth(listWorkTimeHandler)),
+  get('/project', guardAuth(listWorkTimeByProjectHandler)),
+  post('/create', guardAuth(createOrUpdateWorkTimeHandler)),
+  post('/update', guardAuth(createOrUpdateWorkTimeHandler)),
 ])
 
 module.exports = {

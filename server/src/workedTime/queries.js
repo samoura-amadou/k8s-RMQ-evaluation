@@ -1,14 +1,14 @@
 const { log } = require('../utils/logger')
 
 const selectById = id => {
-  return { text: 'SELECT * FROM project WHERE id = $1', values: [id] }
+  return { text: 'SELECT * FROM worked_time WHERE id = $1', values: [id] }
 }
 
 const updateOrInsert = ({ exist, id, info, project }) => {
   if (exist) {
     log('update', { id, info })
     return {
-      text: 'UPDATE project SET info = $2 WHERE id = $1 RETURNING id',
+      text: 'UPDATE worked_time SET info = $2 WHERE id = $1 RETURNING id',
       values: [id, info],
     }
   } else {

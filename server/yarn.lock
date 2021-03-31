@@ -22,10 +22,10 @@
     chalk "^2.4.2"
     handlebars "^4.1.2"
 
-"@ghivert/caravel@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@ghivert/caravel/-/caravel-0.1.1.tgz#dc659fed3918ab1706d222bc9b0c620409f65d12"
-  integrity sha512-YKwK5J+fbPuWXXtmYFByWr4Y70N3N3FNVhIH9TmOhUfJCo2D30Gmf95bc8IPvUQNC7fxFWzTI9EWSkA8KkUVTQ==
+"@ghivert/caravel@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@ghivert/caravel/-/caravel-0.2.0.tgz#bfd27f72891c951c741881984d7535a0e03a2423"
+  integrity sha512-5nHbNWfbK9qdcvUqwPCaz3ZhORof+XPI+AR3b8Goku7pZWa6EL1Dayssc7ILkl6bUxmf15jsSrbOHqg6Kf3eGg==
   dependencies:
     chalk "^4.1.0"
     commander "^4.1.1"

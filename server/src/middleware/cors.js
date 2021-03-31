@@ -13,22 +13,13 @@ const headers = {
   'Access-Control-Allow-Credentials': true,
 }
 
-const cors = handler => request => {
+const cors = handler => async request => {
   if (request.method === 'OPTIONS') {
-    return {
-      statusCode: 200,
-      headers,
-      body: 'OK',
-    }
+    return { statusCode: 200, headers, body: 'OK' }
   } else {
     const response = handler(request)
-    return Promise.resolve(response).then(res => ({
-      ...res,
-      headers: {
-        ...res.headers,
-        ...headers,
-      },
-    }))
+    const res = await Promise.resolve(response)
+    return { ...res, headers: { ...res.headers, ...headers } }
   }
 }
 

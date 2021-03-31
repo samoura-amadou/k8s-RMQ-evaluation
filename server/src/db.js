@@ -8,11 +8,14 @@ const client = new Client({
 })
 
 const connect = async () =>
-  client.connect().catch(err => {
-    console.error(
-      `Postgres: Connection refused to ${err.address + ':' + err.port}`
-    )
-  })
+  client
+    .connect()
+    .then(() => console.log('Postgres: Connection success'))
+    .catch(err => {
+      const add = err.address + ':' + err.port
+      const msg = `Postgres: Connection refused to ${add}`
+      console.error(msg)
+    })
 
 const end = async () => {
   await client.end()

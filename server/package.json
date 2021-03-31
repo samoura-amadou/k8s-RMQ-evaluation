@@ -7,7 +7,7 @@
     "@frenchpastries/arrange": "^0.2.1",
     "@frenchpastries/assemble": "^0.2.1",
     "@frenchpastries/millefeuille": "^0.1.11",
-    "@ghivert/caravel": "^0.1.1",
+    "@ghivert/caravel": "^0.2.0",
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "node-fetch": "^2.6.1",

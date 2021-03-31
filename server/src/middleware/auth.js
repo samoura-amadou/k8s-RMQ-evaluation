@@ -8,9 +8,7 @@ const check = bearer =>
     jwt.verify(
       bearer,
       process.env.AUTH0_PUBLIC_KEY,
-      {
-        algorithms: ['RS256'],
-      },
+      { algorithms: ['RS256'] },
       (err, decoded) => (err ? reject(err) : resolve(decoded))
     )
   })
@@ -20,15 +18,26 @@ const parseAuth = handler => request => {
   const authorization = headers.authorization || ''
   if (authorization.startsWith('Bearer')) {
     return check(authorization.replace(/^Bearer\s+/, ''))
-      .then(decoded => handler({ ...request, authorized: true, decoded }))
+      .then(decoded => {
+        const uid = decoded.sub.split('|')[1]
+        return handler({ ...request, authorized: true, decoded, uid })
+      })
       .catch(err => handler({ ...request, authorized: false }))
   } else {
     return handler({ ...request, authorized: false })
   }
 }
 
-const guardAuth = handler => request =>
-  request.authorized ? handler(request) : forbidden('Unauthorized')
+const guardAuth = handler => async request => {
+  if (request.authorized) {
+    log('there')
+    const result = await handler(request)
+    log(result)
+    return result
+  } else {
+    return forbidden('Unauthorized')
+  }
+}
 
 module.exports = {
   parseAuth,

@@ -11,33 +11,26 @@ const {
 const { client, connect } = require('./db')
 const { projectContext } = require('./project')
 const { workedTimeContext } = require('./workedTime')
+const { userInfoContext } = require('./user-info')
 const { cors } = require('./middleware/cors')
-const { guardAuth, parseAuth } = require('./middleware/auth')
-const { authContext } = require('./auth')
+const { parseAuth } = require('./middleware/auth')
 const { log } = require('./utils/logger')
 
 connect()
 
-const ok = () => response('OK')
-
 const handler = Assemble.routes([
-  get('/', ok),
-  authContext,
+  get('/', () => response(handler.exportRoutes())),
   projectContext,
   workedTimeContext,
+  userInfoContext,
   notFound(() => ({ statusCode: 404 })),
 ])
 
-MilleFeuille.create(
-  cors(
-    parseAuth(
-      guardAuth(
-        Arrange.jsonBody(
-          Arrange.jsonContentType(Arrange.parseJSONBody(handler))
-        )
-      )
-    )
-  ),
-  { port: process.env.PORT }
+const jsonMiddleware = Arrange.jsonBody(
+  Arrange.jsonContentType(Arrange.parseJSONBody(handler))
 )
+
+MilleFeuille.create(cors(parseAuth(jsonMiddleware)), {
+  port: process.env.PORT,
+})
 console.log('-----> Server up and running at port ' + process.env.PORT)

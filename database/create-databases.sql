@@ -1,4 +1,4 @@
 create user timy;
 create database timy;
 grant all privileges on database timy to timy;
-ALTER USER timy WITH SUPERUSER;
+alter user timy with superuser;
