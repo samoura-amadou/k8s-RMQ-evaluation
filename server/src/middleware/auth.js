@@ -30,9 +30,7 @@ const parseAuth = handler => request => {
 
 const guardAuth = handler => async request => {
   if (request.authorized) {
-    log('there')
     const result = await handler(request)
-    log(result)
     return result
   } else {
     return forbidden('Unauthorized')
