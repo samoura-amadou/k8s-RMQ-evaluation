@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken')
 
 const check = bearer =>
   new Promise((resolve, reject) => {
-    log('check ', bearer)
     jwt.verify(
       bearer,
       process.env.AUTH0_PUBLIC_KEY,
