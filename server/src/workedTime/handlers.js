@@ -1,10 +1,5 @@
 const { response, forbidden } = require('@frenchpastries/millefeuille/response')
-const {
-  selectById,
-  updateOrInsert,
-  listByWorkTime,
-  list,
-} = require('./queries')
+const { selectById, updateOrInsert, listByProject, list } = require('./queries')
 const { log } = require('../utils/logger')
 const { client } = require('../db')
 
@@ -30,7 +25,6 @@ const createOrUpdate = async ({ id, info, project }) => {
 const createOrUpdateWorkTimeHandler = async ({ body }) => {
   const { id, info, project } = body
   log(body)
-  log({ id, info, project })
   return createOrUpdate({ id, info, project })
 }
 

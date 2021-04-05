@@ -31,7 +31,11 @@ const createOrUpdateProjectHandler = async ({ body }) => {
 const getProjectHandler = async ({ url }) => {
   const { id } = url.query
   if (id) {
-    return getProject({ id })
+    const projectRows = await getProject({ id })
+    if (projectRows && projectRows.length > 0) {
+      const project = projectRows[0]
+      return response(project)
+    }
   } else {
     return forbidden('no id')
   }
