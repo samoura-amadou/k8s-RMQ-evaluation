@@ -5,6 +5,7 @@ const client = new Client({
   host: process.env.PGHOST,
   database: process.env.PGDATABASE,
   port: process.env.PGPORT,
+  password: process.env.PGPASSWORD,
 })
 
 const connect = async () =>
