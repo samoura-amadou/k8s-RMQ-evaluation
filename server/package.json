@@ -1,7 +1,7 @@
 {
   "name": "crud-server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/main.js",
   "license": "MIT",
   "dependencies": {
     "@frenchpastries/arrange": "^0.2.1",
@@ -17,5 +17,8 @@
     "start": "node src/main",
     "dev": "nodemon src/main",
     "migrate": "caravel migrate"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
