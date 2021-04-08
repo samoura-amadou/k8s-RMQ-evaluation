@@ -1,17 +1,17 @@
 const { Client } = require('pg')
-
+console.log({
+  user: process.env.PGUSER,
+  host: process.env.PGHOST,
+  database: process.env.PGDATABASE,
+  port: process.env.PGPORT,
+  password: process.env.PGPASSWORD,
+})
 const client = new Client({
   user: process.env.PGUSER,
   host: process.env.PGHOST,
   database: process.env.PGDATABASE,
   port: process.env.PGPORT,
   password: process.env.PGPASSWORD,
-  ssl: true,
-  extra: {
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  },
 })
 
 const connect = async () =>
@@ -19,8 +19,9 @@ const connect = async () =>
     .connect()
     .then(() => console.log('Postgres: Connection success'))
     .catch(err => {
+      console.log(err)
       const add = err.address + ':' + err.port
-      const msg = `Postgres: Connection refused to ${add}`
+      const msg = `Postgres: Connection refused to ${err.message}`
       console.error(msg)
     })
 
