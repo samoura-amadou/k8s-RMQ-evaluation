@@ -13,6 +13,7 @@ const client = new Client({
   database: process.env.PGDATABASE,
   port: process.env.PGPORT,
   password: process.env.PGPASSWORD,
+  ssl: process.env.NODE_ENV !== 'dev',
 })
 
 const connect = async () =>
