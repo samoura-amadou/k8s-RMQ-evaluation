@@ -1,5 +1,6 @@
 const { Client } = require('pg')
-console.log({
+const { log, error } = require('./utils/logger')
+log({
   user: process.env.PGUSER,
   host: process.env.PGHOST,
   database: process.env.PGDATABASE,
@@ -19,10 +20,9 @@ const connect = async () =>
     .connect()
     .then(() => console.log('Postgres: Connection success'))
     .catch(err => {
-      console.log(err)
       const add = err.address + ':' + err.port
       const msg = `Postgres: Connection refused to ${err.message}`
-      console.error(msg)
+      error(msg)
     })
 
 const end = async () => {
