@@ -18,7 +18,7 @@ const parseAuth = handler => request => {
   if (authorization.startsWith('Bearer')) {
     return check(authorization.replace(/^Bearer\s+/, ''))
       .then(decoded => {
-        const uid = decoded.sub.split('|')[1]
+        const uid = decoded.sub
         return handler({ ...request, authorized: true, decoded, uid })
       })
       .catch(err => handler({ ...request, authorized: false }))
