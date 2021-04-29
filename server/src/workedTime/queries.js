@@ -40,7 +40,7 @@ const listByProject = ({ project }) => {
 const list = ({ owner }) => {
   log('listByProject', { owner })
   return {
-    text: `SELECT worked_time.info, project.info as p_info, project.id as pid, worked_time.id
+    text: `SELECT worked_time.info, project.info as p_info, project.created_at as project_creation, project.id as pid, worked_time.id
       FROM worked_time
       RIGHT JOIN project ON project.id=worked_time.project
       WHERE project.owner = $1`,

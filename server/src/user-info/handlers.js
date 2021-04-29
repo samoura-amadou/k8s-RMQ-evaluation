@@ -32,8 +32,7 @@ const createOrUpdateUserInfoHandler = async ({ body, uid }) => {
 
 const getUserInfoHandler = async ({ uid }) => {
   if (uid) {
-    const data = await getUserInfo({ id: uid })
-    return response(data)
+    return response(getUserInfo({ id: uid }))
   } else {
     return forbidden('no id')
   }
