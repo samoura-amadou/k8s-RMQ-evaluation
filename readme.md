@@ -4,7 +4,7 @@ It is very cool watch out!
 
 And install docker
 
-### CI
+### CI
 
 Work in progress ( I swear )
 you suck heroku
