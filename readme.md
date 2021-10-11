@@ -7,4 +7,4 @@ And install docker
 ### CI
 
 Work in progress ( I swear )
-God bless heroku
+you suck heroku
