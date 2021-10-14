@@ -52,4 +52,4 @@ jobs:
 
       - name: Force update service
         id: update
-        run: aws ecs update-service --service ${{env.ECR_REPOSITORY}}-timy-service-${{env.ENVIRONMENT}} --cluster cluster-V4-${{env.ENVIRONMENT}} --force-new-deployment
+        run: aws ecs update-service --service ${{env.ECR_REPOSITORY}}-timy-service-${{env.ENVIRONMENT}} --cluster cluster-timy-${{env.ENVIRONMENT}} --force-new-deployment
