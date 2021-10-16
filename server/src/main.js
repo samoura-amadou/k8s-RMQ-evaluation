@@ -20,7 +20,8 @@ connect()
 
 const handler = Assemble.routes([
   get('/', () => response('ok')),
-  get('/routes', () => response(handler.exportRoutes())),
+  get('/time', () => response('ok')),
+  get('/time/routes', () => response(handler.exportRoutes())),
   projectContext,
   workedTimeContext,
   userInfoContext,
