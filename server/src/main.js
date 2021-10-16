@@ -20,12 +20,13 @@ connect()
 
 const handler = Assemble.routes([
   get('/', () => response('ok')),
-  get('/time', () => response('ok')),
-  get('/time/routes', () => response(handler.exportRoutes())),
-  projectContext,
-  workedTimeContext,
-  userInfoContext,
-  notFound(() => ({ statusCode: 404 })),
+  context('/time', [
+    get('/', () => response(handler.exportRoutes())),
+    projectContext,
+    workedTimeContext,
+    userInfoContext,
+    notFound(() => ({ statusCode: 404 })),
+  ]),
 ])
 
 const jsonMiddleware = Arrange.jsonBody(

@@ -14,7 +14,7 @@
     "pg": "^8.5.1"
   },
   "scripts": {
-    "start": "caravel migrate & node src/main",
+    "start": "caravel migrate && node src/main",
     "dev": "nodemon src/main",
     "migrate": "caravel migrate"
   },
