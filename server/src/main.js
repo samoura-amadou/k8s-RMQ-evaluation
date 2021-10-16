@@ -19,10 +19,7 @@ const { log } = require('./utils/logger')
 connect()
 
 const handler = Assemble.routes([
-  get('/', () => {
-    log('ping')
-    return response('ok')
-  }),
+  get('/', () => response('ok')),
   get('/routes', () => response(handler.exportRoutes())),
   projectContext,
   workedTimeContext,
