@@ -25,8 +25,8 @@ const handler = Assemble.routes([
     projectContext,
     workedTimeContext,
     userInfoContext,
-    notFound(() => ({ statusCode: 404 })),
   ]),
+  notFound(() => ({ statusCode: 404 })),
 ])
 
 const jsonMiddleware = Arrange.jsonBody(
