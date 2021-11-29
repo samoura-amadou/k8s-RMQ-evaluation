@@ -1,5 +1,5 @@
 const origin = () => {
-  if (process.env.NODE_ENV === 'prod') {
+  if (process.env.FRONT_HOSTNAME) {
     return process.env.FRONT_HOSTNAME
   } else {
     return 'http://localhost:3000'
