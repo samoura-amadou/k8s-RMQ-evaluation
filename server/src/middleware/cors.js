@@ -1,4 +1,7 @@
+const { log } = require('./utils/logger')
+
 const origin = () => {
+  log(process.env.FRONT_HOSTNAME)
   if (process.env.FRONT_HOSTNAME) {
     return process.env.FRONT_HOSTNAME
   } else {
