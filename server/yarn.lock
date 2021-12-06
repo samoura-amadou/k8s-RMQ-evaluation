@@ -7,10 +7,10 @@
   resolved "https://registry.yarnpkg.com/@frenchpastries/arrange/-/arrange-0.3.1.tgz#4e6b4a2f16c83350e6cbbc7bd975e0b60f8ccef5"
   integrity sha512-vp66+ul78c8aUxX10HvSodwZKyibU2haSMXvnoCJQrcO53yeM9KTDRn9WryW/Nk7XJJuTMaK7hWbt2BZN1UENQ==
 
-"@frenchpastries/assemble@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@frenchpastries/assemble/-/assemble-0.5.0.tgz#d58176dea64cfda6191ac1dac7bf318ce03ffdb0"
-  integrity sha512-I5oVM/dpxAhQfvlElBBJ5i1yc1y2O/ytjyV/Uz59p+y5SnwFxK9qD3aAuUKTyuXlVWaae84bF8CgiVok5911TQ==
+"@frenchpastries/assemble@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@frenchpastries/assemble/-/assemble-0.6.0.tgz#b40217001683cc71278053f1fd82d9f18511a4f6"
+  integrity sha512-/aBqV8/4lMiCNcUU4HOqZZqIsbdD9YBChxvEobdMVqijzmKr7jealGS+12JomQPbPO+i4b5RB8Z/4Ur6Z8NCzg==
   dependencies:
     chalk "^2.4.2"
 

@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@frenchpastries/arrange": "^0.3.1",
-    "@frenchpastries/assemble": "^0.5.0",
+    "@frenchpastries/assemble": "^0.6.0",
     "@frenchpastries/millefeuille": "^0.3.0",
     "@ghivert/caravel": "^0.2.0",
     "dotenv": "^8.2.0",
