@@ -17,7 +17,6 @@ const headers = {
 }
 
 const cors = handler => async request => {
-  log('cors', origin())
   if (request.method === 'OPTIONS') {
     return { statusCode: 200, headers, body: 'OK' }
   } else {
