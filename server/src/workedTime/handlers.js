@@ -28,8 +28,8 @@ const createOrUpdateWorkTimeHandler = async ({ body }) => {
   return createOrUpdate({ id, info, project })
 }
 
-const getWorkTimeHandler = async ({ url }) => {
-  const { id } = url.query
+const getWorkTimeHandler = async ({ url, location }) => {
+  const id = location.searchParams.get('id')
   if (id) {
     return getWorkedTime({ id })
   } else {
@@ -37,8 +37,8 @@ const getWorkTimeHandler = async ({ url }) => {
   }
 }
 
-const listWorkTimeByProjectHandler = async ({ url }) => {
-  const { project } = url.query
+const listWorkTimeByProjectHandler = async ({ url, location }) => {
+  const project = location.searchParams.get('project')
   log({ project })
   if (project) {
     const query = listByProject({ project })
@@ -49,8 +49,8 @@ const listWorkTimeByProjectHandler = async ({ url }) => {
   }
 }
 
-const listWorkTimeHandler = async ({ url }) => {
-  const { owner } = url.query
+const listWorkTimeHandler = async ({ url, location }) => {
+  const owner = location.searchParams.get('owner')
   log({ owner })
   if (owner) {
     const query = list({ owner })

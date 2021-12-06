@@ -21,7 +21,10 @@ const parseAuth = handler => request => {
         const uid = decoded.sub
         return handler({ ...request, authorized: true, decoded, uid })
       })
-      .catch(err => handler({ ...request, authorized: false }))
+      .catch(err => {
+        log(err)
+        return handler({ ...request, authorized: false })
+      })
   } else {
     return handler({ ...request, authorized: false })
   }
