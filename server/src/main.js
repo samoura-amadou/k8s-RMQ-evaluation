@@ -36,4 +36,4 @@ const jsonMiddleware = Arrange.jsonBody(
 MilleFeuille.create(cors(parseAuth(jsonMiddleware)), {
   port: process.env.PORT,
 })
-console.log('-----> Server up and running at port ' + process.env.PORT)
+log('-----> Server up and running at port ' + process.env.PORT)
