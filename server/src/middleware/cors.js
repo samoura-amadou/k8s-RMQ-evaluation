@@ -1,4 +1,4 @@
-const { log } = require('./utils/logger')
+const { log } = require('../utils/logger')
 
 const origin = () => {
   log(process.env.FRONT_HOSTNAME)
