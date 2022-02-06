@@ -2,22 +2,22 @@
 # yarn lockfile v1
 
 
-"@frenchpastries/arrange@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@frenchpastries/arrange/-/arrange-0.3.1.tgz#4e6b4a2f16c83350e6cbbc7bd975e0b60f8ccef5"
-  integrity sha512-vp66+ul78c8aUxX10HvSodwZKyibU2haSMXvnoCJQrcO53yeM9KTDRn9WryW/Nk7XJJuTMaK7hWbt2BZN1UENQ==
+"@frenchpastries/arrange@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@frenchpastries/arrange/-/arrange-1.0.0.tgz#413c66746e6638acb232ce1c6c4fa6251a1a0e02"
+  integrity sha512-/2mzyh9eymQFh75P42nzbMdryTyfl8izOZeEr3ZmBdydzkBX2NqXbVy368dHZagUPtPepsjkMrTGBpu9h4/j2Q==
 
-"@frenchpastries/assemble@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@frenchpastries/assemble/-/assemble-0.6.0.tgz#b40217001683cc71278053f1fd82d9f18511a4f6"
-  integrity sha512-/aBqV8/4lMiCNcUU4HOqZZqIsbdD9YBChxvEobdMVqijzmKr7jealGS+12JomQPbPO+i4b5RB8Z/4Ur6Z8NCzg==
+"@frenchpastries/assemble@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@frenchpastries/assemble/-/assemble-0.7.0.tgz#ff11eb00f772b646a596d5919a8e9e3fdfe66ba0"
+  integrity sha512-d96jXRvbReVMDsTf7G0dUWp2nERUoCoGhDPHG6jmojxcMU85JI0TxHJdXaZqvHw2/DSjuvns4vbEUFV/SywRNQ==
   dependencies:
     chalk "^2.4.2"
 
-"@frenchpastries/millefeuille@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@frenchpastries/millefeuille/-/millefeuille-0.3.0.tgz#51c6f798a3ba5ba890fd23cd93c7ea86fe1c6b67"
-  integrity sha512-dDJll0bGJjgL/H3G0/K9EerUksqrqLe9td76BkCsbyNVjvQKacANVgE86dtMti8CNz69WuKGs88xi5EciwGZtw==
+"@frenchpastries/millefeuille@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@frenchpastries/millefeuille/-/millefeuille-1.0.2.tgz#9e3bf46c3c6490c27333eb5d336491accc8fd456"
+  integrity sha512-pUAtz4Q38UfhMpgWLfuQvyWyNeuUT+Ktdkmf1KglA5ebtDcVgkOUvUC5+KRNVJPALFb4I7MI6D+0bFvQgFPrKA==
 
 "@ghivert/caravel@^0.2.0":
   version "0.2.0"
@@ -99,6 +99,11 @@ commander@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-4.1.1.tgz#9fd602bd936294e9e9ef46a3f4d6964044b18068"
   integrity sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==
+
+dotenv@^16.0.0:
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.0.tgz#c619001253be89ebb638d027b609c75c26e47411"
+  integrity sha512-qD9WU0MPM4SWLPJy/r2Be+2WgQj8plChsyrCNQzW/0WjvcJQiKQJ9mH3ZgB3fxbUUxgc/11ZJ0Fi5KiimWGz2Q==
 
 dotenv@^8.2.0:
   version "8.6.0"
@@ -206,9 +211,9 @@ ms@^2.1.1:
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
 node-fetch@^2.6.1:
-  version "2.6.5"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.5.tgz#42735537d7f080a7e5f78b6c549b7146be1742fd"
-  integrity sha512-mmlIVHJEu5rnIxgEgez6b9GgWXbkZj5YZ7fx+2r94a2E+Uirsp6HsPTPlomfdHtpt/B0cdKviwkoaM6pyvUOpQ==
+  version "2.6.7"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
+  integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
   dependencies:
     whatwg-url "^5.0.0"
 
@@ -231,6 +236,11 @@ pg-pool@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-3.4.1.tgz#0e71ce2c67b442a5e862a9c182172c37eda71e9c"
   integrity sha512-TVHxR/gf3MeJRvchgNHxsYsTCHQ+4wm3VIHSS19z8NC0+gioEhq1okDY1sm/TYbfoP6JLFx01s0ShvZ3puP/iQ==
+
+pg-pool@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-3.5.1.tgz#f499ce76f9bf5097488b3b83b19861f28e4ed905"
+  integrity sha512-6iCR0wVrro6OOHFsyavV+i6KYL4lVNyYAB9RD18w66xSzN+d8b66HiwuP30Gp1SH5O9T82fckkzsRjlrhD0ioQ==
 
 pg-protocol@^1.5.0:
   version "1.5.0"
@@ -257,6 +267,19 @@ pg@^8.5.1:
     packet-reader "1.0.0"
     pg-connection-string "^2.5.0"
     pg-pool "^3.4.1"
+    pg-protocol "^1.5.0"
+    pg-types "^2.1.0"
+    pgpass "1.x"
+
+pg@^8.7.3:
+  version "8.7.3"
+  resolved "https://registry.yarnpkg.com/pg/-/pg-8.7.3.tgz#8a5bdd664ca4fda4db7997ec634c6e5455b27c44"
+  integrity sha512-HPmH4GH4H3AOprDJOazoIcpI49XFsHCe8xlrjHkWiapdbHK+HLtbm/GQzXYAZwmPju/kzKhjaSfMACG+8cgJcw==
+  dependencies:
+    buffer-writer "2.0.0"
+    packet-reader "1.0.0"
+    pg-connection-string "^2.5.0"
+    pg-pool "^3.5.1"
     pg-protocol "^1.5.0"
     pg-types "^2.1.0"
     pgpass "1.x"
@@ -289,6 +312,11 @@ postgres-interval@^1.1.0:
   integrity sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==
   dependencies:
     xtend "^4.0.0"
+
+prettier@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.5.1.tgz#fff75fa9d519c54cf0fce328c1017d94546bc56a"
+  integrity sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==
 
 readable-stream@^3.0.0:
   version "3.6.0"

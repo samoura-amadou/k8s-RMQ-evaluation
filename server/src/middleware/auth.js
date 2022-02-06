@@ -12,7 +12,7 @@ const check = bearer =>
     )
   })
 
-const parseAuth = handler => request => {
+const parseAuth = handler => async request => {
   const { headers } = request
   const authorization = headers.authorization || ''
   if (authorization.startsWith('Bearer')) {

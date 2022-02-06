@@ -1,0 +1,10 @@
+#!/bin/sh
+cd database
+docker images | grep timy-database 1> /dev/null 2> /dev/null
+if [ $? -ne 0 ]; then
+  sh build.sh
+fi
+sh run.sh
+cd ../server
+yarn migrate
+yarn dev

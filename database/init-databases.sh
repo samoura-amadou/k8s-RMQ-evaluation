@@ -1,1 +1,2 @@
-#here add initialisation code for you db
+#!/bin/sh
+# Here add initialisation code for your DB
