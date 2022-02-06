@@ -9,7 +9,7 @@
     "migrate": "caravel migrate"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "dependencies": {
     "@frenchpastries/arrange": "^1.0.0",
