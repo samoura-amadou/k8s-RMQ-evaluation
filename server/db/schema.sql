@@ -20,7 +20,8 @@ CREATE TABLE public.worked_time (
     info json,
     project uuid NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    uid text NOT NULL
 );
 ALTER TABLE ONLY public.__caravel_migrations
     ADD CONSTRAINT __caravel_migrations_pkey PRIMARY KEY (version);

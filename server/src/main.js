@@ -9,17 +9,16 @@ const { workedTimeContext } = require('./workedTime')
 const { userInfoContext } = require('./user-info')
 const { parseAuth } = require('./middleware/auth')
 const { log } = require('./utils/logger')
+const { onRequest } = require('./middleware/logger')
 
 connect()
 
 const handler = routes([
   get('/', () => response('ok')),
-  context('/time', [
-    get('/', () => response(handler.exportRoutes())),
-    projectContext,
-    workedTimeContext,
-    userInfoContext,
-  ]),
+  get('/routes', () => response(handler.exportRoutes())),
+  projectContext,
+  workedTimeContext,
+  userInfoContext,
   notFound(() => ({ statusCode: 404 })),
 ])
 
@@ -34,7 +33,11 @@ const origin = () => {
 
 const withJSONIn = Arrange.json.parse(handler)
 const withJSONOut = Arrange.json.response(withJSONIn)
-const withAuth = parseAuth(withJSONOut)
-const withCors = Arrange.cors.origin(withAuth, origin())
-MilleFeuille.create(withCors, { port: process.env.PORT })
+const withCors = Arrange.cors.origin(withJSONOut, origin())
+const withLogger = onRequest(withCors)
+const withAuth = parseAuth(withLogger)
+MilleFeuille.create(withAuth, { port: process.env.PORT })
+
+console.log('--> Routes: ', handler.exportRoutes())
+
 log('-----> Server up and running at port ' + process.env.PORT)

@@ -11,24 +11,24 @@ const getWorkedTime = async ({ id }) => {
   return rows
 }
 
-const createOrUpdate = async ({ id, info, project }) => {
+const createOrUpdate = async ({ id, info, project, uid }) => {
   const old = await getWorkedTime({ id })
   const exist = old.length > 0
-  const query = updateOrInsert({ exist, id, info, project })
+  const query = updateOrInsert({ exist, id, info, project, uid })
   log(query)
   const { rows } = await client.query(query)
   log(rows)
   log('done')
-  return response(rows[0].id)
+  return response(rows[0])
 }
 
-const createOrUpdateWorkTimeHandler = async ({ body }) => {
+const createOrUpdateWorkTimeHandler = async ({ body, uid }) => {
   const { id, info, project } = body
   log(body)
-  return createOrUpdate({ id, info, project })
+  return createOrUpdate({ id, info, project, uid })
 }
 
-const getWorkTimeHandler = async ({ url, location }) => {
+const getWorkTimeHandler = async ({ location }) => {
   const id = location.searchParams.get('id')
   if (id) {
     return getWorkedTime({ id })
@@ -37,7 +37,7 @@ const getWorkTimeHandler = async ({ url, location }) => {
   }
 }
 
-const listWorkTimeByProjectHandler = async ({ url, location }) => {
+const listWorkTimeByProjectHandler = async ({ location }) => {
   const project = location.searchParams.get('project')
   log({ project })
   if (project) {
@@ -49,7 +49,7 @@ const listWorkTimeByProjectHandler = async ({ url, location }) => {
   }
 }
 
-const listWorkTimeHandler = async ({ url, location }) => {
+const listWorkTimeHandler = async ({ location }) => {
   const owner = location.searchParams.get('owner')
   log({ owner })
   if (owner) {
@@ -61,9 +61,22 @@ const listWorkTimeHandler = async ({ url, location }) => {
   }
 }
 
+const deleteWorkTimeHandler = async ({ location }) => {
+  const id = location.searchParams.get('id')
+  log({ id })
+  if (id) {
+    const query = del({ id })
+    await client.query(query)
+    return response(true)
+  } else {
+    return forbidden('no id')
+  }
+}
+
 module.exports = {
   createOrUpdateWorkTimeHandler,
   getWorkTimeHandler,
   listWorkTimeByProjectHandler,
   listWorkTimeHandler,
+  deleteWorkTimeHandler,
 }

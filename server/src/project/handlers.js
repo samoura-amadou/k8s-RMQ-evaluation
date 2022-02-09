@@ -19,7 +19,7 @@ const createOrUpdate = async ({ id, info, owner }) => {
   const { rows } = await client.query(query)
   log(rows)
   log('done')
-  return response(rows[0].id)
+  return response(rows[0])
 }
 
 const createOrUpdateProjectHandler = async ({ body }) => {
@@ -28,8 +28,8 @@ const createOrUpdateProjectHandler = async ({ body }) => {
   return createOrUpdate({ id, info, owner })
 }
 
-const getProjectHandler = async ({ url, location }) => {
-  const id = location.searchParams.get('id')
+const getProjectHandler = async request => {
+  const id = request.context.id
   if (id) {
     const projectRows = await getProject({ id })
     if (projectRows && projectRows.length > 0) {
@@ -41,8 +41,8 @@ const getProjectHandler = async ({ url, location }) => {
   }
 }
 
-const listProjectByOwnerHandler = async ({ url, location }) => {
-  const owner = location.searchParams.get('owner')
+const listProjectByOwnerHandler = async request => {
+  const owner = request.uid
   log({ owner })
   if (owner) {
     const query = listByOwner({ owner })

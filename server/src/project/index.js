@@ -6,9 +6,13 @@ const {
 } = require('./handlers')
 const { guardAuth } = require('../middleware/auth')
 
+const projectHandler = request => {
+  if (request.context.id === 'all') return listProjectByOwnerHandler(request)
+  return getProjectHandler(request)
+}
+
 const projectContext = context('/project', [
-  get('/', guardAuth(getProjectHandler)),
-  get('/all', guardAuth(listProjectByOwnerHandler)),
+  get('/:id', guardAuth(projectHandler)),
   post('/create', guardAuth(createOrUpdateProjectHandler)),
   post('/update', guardAuth(createOrUpdateProjectHandler)),
 ])
