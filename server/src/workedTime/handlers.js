@@ -1,5 +1,11 @@
 const { response, forbidden } = require('@frenchpastries/millefeuille/response')
-const { selectById, updateOrInsert, listByProject, list } = require('./queries')
+const {
+  selectById,
+  updateOrInsert,
+  listByProject,
+  list,
+  del,
+} = require('./queries')
 const { log } = require('../utils/logger')
 const { client } = require('../db')
 

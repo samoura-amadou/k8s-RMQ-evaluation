@@ -47,9 +47,9 @@ const list = ({ owner }) => {
 }
 
 const del = ({ id }) => {
-  console.log('deleteById', { owner })
+  log('deleteById', { id })
   return {
-    text: `DELETE FROM worked_time WHERE id = $1`,
+    text: `DELETE FROM worked_time WHERE id = $1 RETURNING id`,
     values: [id],
   }
 }
