@@ -23,7 +23,6 @@ const connect = async () => {
     .connect()
     .then(() => console.log('Postgres: Connection success'))
     .catch(err => {
-      console.log(process.env)
       const add = err.address + ':' + err.port
       const msg = `Postgres: Connection refused to ${err.message}`
       error(msg)
@@ -34,6 +33,6 @@ const end = async () => {
   await client.end()
 }
 
-const query = (...args) => client.qery(args)
+const query = (...args) => client.query(args)
 
 module.exports = { client, connect, end, query }
