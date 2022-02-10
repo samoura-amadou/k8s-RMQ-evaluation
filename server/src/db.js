@@ -23,6 +23,7 @@ const connect = async () => {
     .connect()
     .then(() => console.log('Postgres: Connection success'))
     .catch(err => {
+      console.log(process.env)
       const add = err.address + ':' + err.port
       const msg = `Postgres: Connection refused to ${err.message}`
       error(msg)
