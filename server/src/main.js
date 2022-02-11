@@ -15,10 +15,12 @@ connect()
 
 const handler = routes([
   get('/', () => response('ok')),
-  get('/routes', () => response(handler.exportRoutes())),
-  projectContext,
-  workedTimeContext,
-  userInfoContext,
+  context('/time', [
+    get('/routes', () => response(handler.exportRoutes())),
+    projectContext,
+    workedTimeContext,
+    userInfoContext,
+  ]),
   notFound(() => ({ statusCode: 404 })),
 ])
 
