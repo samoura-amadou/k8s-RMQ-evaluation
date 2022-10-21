@@ -2,6 +2,7 @@ const { response, forbidden } = require('@frenchpastries/millefeuille/response')
 const { selectById, updateOrInsert } = require('./queries')
 const { log } = require('../utils/logger')
 const { client } = require('../db')
+const { createOrUpdate: createOrUpdateTenant } = require('../tenant/handlers')
 
 const getUserInfo = async ({ id }) => {
   log({ id })
@@ -20,6 +21,11 @@ const createOrUpdate = async ({ id, info }) => {
   const { rows } = await client.query(query)
   log(rows)
   log('done')
+  if (!exist) {
+    log('create tenant')
+    const tenant = await createOrUpdateTenant({ id, info: {}, owner: id })
+    log(tenant)
+  }
   return rows[0].id
 }
 

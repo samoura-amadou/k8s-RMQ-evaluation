@@ -2,7 +2,16 @@ const { log } = require('../utils/logger')
 
 const selectById = id => {
   return {
-    text: 'SELECT project.id, project.info, project.owner, project.created_at, project.updated_at, user_info.info as owner_info FROM project LEFT JOIN user_info ON user_info.id = project.owner WHERE project.id = $1',
+    text: `SELECT
+       project.id,
+       project.info,
+       project.owner,
+       project.created_at,
+       project.updated_at,
+       user_info.info as owner_info
+     FROM project
+     LEFT JOIN user_info ON user_info.id = project.owner
+     WHERE project.id = $1`,
     values: [id],
   }
 }
@@ -33,7 +42,12 @@ const updateOrInsert = ({ exist, id, info, owner }) => {
 const listByOwner = ({ owner }) => {
   log('list', { owner })
   return {
-    text: `SELECT project.id, project.info, project.owner, project.created_at, project.updated_at, user_info.info as owner_info FROM project
+    text: `SELECT
+        project.id,
+        project.info,
+        project.owner,
+        project.created_at,
+        project.updated_at, user_info.info as owner_info FROM project
       LEFT JOIN user_info ON user_info.id = project.owner
       WHERE project.owner = $1`,
     values: [owner],

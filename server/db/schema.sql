@@ -7,6 +7,15 @@ CREATE TABLE public.project (
     info json,
     owner text NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    members json
+);
+CREATE TABLE public.tenant (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    info json,
+    owner uuid NOT NULL,
+    members json,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
 );
 CREATE TABLE public.user_info (
@@ -27,6 +36,8 @@ ALTER TABLE ONLY public.__caravel_migrations
     ADD CONSTRAINT __caravel_migrations_pkey PRIMARY KEY (version);
 ALTER TABLE ONLY public.project
     ADD CONSTRAINT project_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.tenant
+    ADD CONSTRAINT tenant_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.user_info
     ADD CONSTRAINT user_info_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.worked_time

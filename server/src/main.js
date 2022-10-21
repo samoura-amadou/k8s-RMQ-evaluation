@@ -6,6 +6,7 @@ const { get, notFound, context, routes } = require('@frenchpastries/assemble')
 const { connect } = require('./db')
 const { projectContext } = require('./project')
 const { workedTimeContext } = require('./workedTime')
+const { tenantContext } = require('./tenant')
 const { userInfoContext } = require('./user-info')
 const { parseAuth } = require('./middleware/auth')
 const { log } = require('./utils/logger')
@@ -20,6 +21,7 @@ const handler = routes([
     projectContext,
     workedTimeContext,
     userInfoContext,
+    tenantContext,
   ]),
   notFound(() => ({ statusCode: 404 })),
 ])
