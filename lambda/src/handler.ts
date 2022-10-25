@@ -15,7 +15,7 @@ connect()
 const handler = routes([
   get('/', async () => response('ok')),
   context('/time', [
-    get('/routes', async () => response(handler.export())),
+    get('/routes', async () => response(handler.routes())),
     projectContext,
     workedTimeContext,
     userInfoContext,
@@ -40,6 +40,6 @@ const withCors = Arrange.cors.origin(withJSONOut, origin())
 const withLogger = onRequest(withCors)
 const withAuth = parseAuth(withLogger)
 
-console.log('--> Routes: ', handler.export())
+console.log('--> Routes: ', handler.routes())
 
 export default withAuth
