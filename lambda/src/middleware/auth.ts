@@ -1,41 +1,52 @@
-// @ts-nocheck
 import { log } from '../utils/logger'
 import { forbidden } from '@frenchpastries/millefeuille/response'
 import jwt from 'jsonwebtoken'
+import { Handler, IncomingRequest } from '@frenchpastries/millefeuille'
 
 const check = (bearer: string) =>
   new Promise((resolve, reject) => {
-    jwt.verify(
-      bearer,
-      process.env.AUTH0_PUBLIC_KEY,
-      { algorithms: ['RS256'] },
-      (err, decoded) => (err ? reject(err) : resolve(decoded))
+    const key = process.env.AUTH0_PUBLIC_KEY
+    if (!key) return reject(new Error('Undefined Auth0 Public Key'))
+    jwt.verify(bearer, key, { algorithms: ['RS256'] }, (err, decoded) =>
+      err ? reject(err) : resolve(decoded)
     )
   })
 
-export const parseAuth = handler => async request => {
-  const { headers } = request
-  const authorization = headers.authorization || ''
-  if (authorization.startsWith('Bearer')) {
-    return check(authorization.replace(/^Bearer\s+/, ''))
-      .then(decoded => {
-        const uid = decoded.sub
-        return handler({ ...request, authorized: true, decoded, uid })
-      })
-      .catch(err => {
-        log(err)
-        return handler({ ...request, authorized: false })
-      })
-  } else {
-    return handler({ ...request, authorized: false })
+export const parseAuth = <Body, Response>(
+  handler: Handler<IncomingRequest<Body>, Response>
+) => {
+  return async (request: IncomingRequest<Body>) => {
+    const { headers } = request
+    const authorization = headers.authorization || ''
+    if (authorization.startsWith('Bearer')) {
+      return check(authorization.replace(/^Bearer\s+/, ''))
+        .then((decoded: any) => {
+          const uid = decoded.sub
+          request.authorized = true
+          request.decoded = decoded
+          request.uid = uid
+          return handler(request)
+        })
+        .catch(err => {
+          log(err)
+          request.authorized = false
+          return handler(request)
+        })
+    } else {
+      request.authorized = false
+      return handler(request)
+    }
   }
 }
 
-export const guardAuth = handler => async request => {
-  if (request.authorized) {
-    const result = await handler(request)
-    return result
-  } else {
-    return forbidden('Unauthorized')
+export const guardAuth = <Body, Response>(
+  handler: Handler<IncomingRequest<Body>, Response>
+) => {
+  return async (request: IncomingRequest<Body>) => {
+    if (request.authorized) {
+      return handler(request)
+    } else {
+      return forbidden('Unauthorized')
+    }
   }
 }

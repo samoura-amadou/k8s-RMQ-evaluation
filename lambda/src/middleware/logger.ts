@@ -1,5 +1,4 @@
-// @ts-nocheck
-import mf from '@frenchpastries/millefeuille'
+import { Handler, IncomingRequest } from '@frenchpastries/millefeuille'
 import chalk from 'chalk'
 
 const strDate = () => {
@@ -12,11 +11,11 @@ export const arrow = () => {
   return chalk.bold.grey(message)
 }
 
-export const log = (...message) => {
+export const log = (...message: any) => {
   console.log(arrow(), ...message)
 }
 
-const colorError = value => {
+const colorError = (value: string | Error) => {
   if (typeof value === 'string') {
     return chalk.bold.red(value)
   } else if (value instanceof Error) {
@@ -26,24 +25,24 @@ const colorError = value => {
   }
 }
 
-export const warn = (...message) => {
+export const warn = (...message: any) => {
   console.log(arrow(), ...message.map(colorError))
 }
 
-export const prependBlock = json => {
+export const prependBlock = (json: string) => {
   const [first, ...rest] = json.split('\n')
   const r = rest.map(t => `${arrow()}   ${t}`)
   return [first, ...r].join('\n')
 }
 
-const bodyToString = request => {
+const bodyToString = (request: IncomingRequest) => {
   const { method } = request
   const colorBody = () => prependBlock(JSON.stringify(request.body, null, 2))
   const str = method !== 'GET' ? `  request.body = ${colorBody()}` : ''
   return chalk.bold.yellow(str)
 }
 
-const selectStatusCodeColor = statusCode => {
+const selectStatusCodeColor = (statusCode: number) => {
   const int = Math.floor(statusCode / 100)
   switch (int) {
     case 1:
@@ -60,7 +59,7 @@ const selectStatusCodeColor = statusCode => {
   }
 }
 
-const selectCustomClaimStatus = async request => {
+const selectCustomClaimStatus = async (request: IncomingRequest) => {
   if (process.env.NODE_ENV === 'development' || process.env.VERBOSE) {
     const status = request.authorized ? 'user' : 'disconnected'
     return [',', chalk.yellowBright(status)].join(' ')
@@ -69,11 +68,14 @@ const selectCustomClaimStatus = async request => {
   }
 }
 
+type Log = { type: 'log'; message: any } | { type: 'warn'; message: any }
 const generateLogger = () => {
-  const log = function (...message) {
+  const log = function (...message: any) {
+    // @ts-expect-errors
     this._data.push({ type: 'log', message })
   }
-  const warn = function (...message) {
+  const warn = function (...message: any) {
+    // @ts-expect-errors
     this._data.push({ type: 'warn', message })
   }
   const logger = { _data: [], log, warn }
@@ -82,8 +84,10 @@ const generateLogger = () => {
   return logger
 }
 
-export const onRequest = handler => {
-  return async request => {
+export const onRequest = <Body>(
+  handler: Handler<IncomingRequest<Body>, string>
+) => {
+  return async (request: IncomingRequest<Body>) => {
     request.logger = generateLogger()
     const result = await handler(request)
     const pathname = request.location?.pathname
@@ -95,14 +99,14 @@ export const onRequest = handler => {
       const color = selectStatusCodeColor(statusCode)
       const codeStatus = chalk.hex(color)(`[${statusCode}${loggedState}]`)
       console.log(arrow(), codeStatus, chalk.bold.grey(`[${prefix}]`))
-      request.logger._data.forEach(logs => {
+      request.logger._data.forEach((logs: Log) => {
         if (logs.type === 'log') log(...logs.message)
         if (logs.type === 'warn') warn(...logs.message)
       })
       if (request.method !== 'GET') console.log(arrow(), body)
       if (process.env.VERBOSE) {
         const title = chalk.bold.yellow('response.body =')
-        const parsed = JSON.parse(result.body)
+        const parsed = result.body ? JSON.parse(result.body) : null
         const body = prependBlock(JSON.stringify(parsed, null, 2))
         console.log(arrow(), `  ${title} ${body}`)
       }
