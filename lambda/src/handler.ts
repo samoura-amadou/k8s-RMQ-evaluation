@@ -13,15 +13,15 @@ import { onRequest } from './middleware/logger'
 connect()
 
 const handler = routes([
-  get('/', () => response('ok')),
+  get('/', async () => response('ok')),
   context('/time', [
-    get('/routes', () => response(handler.exportRoutes())),
+    get('/routes', async () => response(handler.export())),
     projectContext,
     workedTimeContext,
     userInfoContext,
     tenantContext,
   ]),
-  notFound(() => ({ statusCode: 404 })),
+  notFound(async () => ({ statusCode: 404 })),
 ])
 
 export const origin = () => {
@@ -39,6 +39,6 @@ const withCors = Arrange.cors.origin(withJSONOut, origin())
 const withLogger = onRequest(withCors)
 const withAuth = parseAuth(withLogger)
 
-console.log('--> Routes: ', handler.exportRoutes())
+console.log('--> Routes: ', handler.export())
 
 export default withAuth
