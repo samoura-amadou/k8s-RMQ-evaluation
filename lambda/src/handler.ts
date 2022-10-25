@@ -1,5 +1,5 @@
 import { response } from '@frenchpastries/millefeuille/response'
-import Arrange from '@frenchpastries/arrange'
+import * as Arrange from '@frenchpastries/arrange'
 import { get, notFound, context, routes } from '@frenchpastries/assemble'
 import { connect } from './db'
 import { projectContext } from './project'
@@ -33,6 +33,7 @@ export const origin = () => {
   }
 }
 
+console.log(Arrange)
 const withJSONIn = Arrange.json.parse(handler)
 const withJSONOut = Arrange.json.response(withJSONIn)
 const withCors = Arrange.cors.origin(withJSONOut, origin())

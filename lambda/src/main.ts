@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
-import MilleFeuille from '@frenchpastries/millefeuille'
+import * as MilleFeuille from '@frenchpastries/millefeuille'
 import handler from './handler'
 
-MilleFeuille.create(handler, { port: process.env.PORT })
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3000
+MilleFeuille.create(handler, { port })

@@ -30,6 +30,7 @@
   },
   "scripts": {
     "compile": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "dev": "ts-node src/main"
   }
 }

@@ -1,9 +1,9 @@
 import { response, forbidden } from '@frenchpastries/millefeuille/response'
 import { selectById, updateOrInsert, listByOwner } from './queries'
-import { log } from '../utils/logger'
-import { client } from '../db'
-import { ProjectInfo } from './types'
 import { IncomingRequest } from '@frenchpastries/millefeuille'
+import { log } from '../utils/logger'
+import { ProjectInfo } from './types'
+import { client } from '../db'
 
 const getProject = async ({ id }: { id: string }) => {
   log({ id })

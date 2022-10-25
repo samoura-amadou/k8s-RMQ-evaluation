@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Context, APIGatewayProxyResult, APIGatewayEvent } from 'aws-lambda'
 import { log } from './utils/logger'
 import handler, { origin } from './handler'

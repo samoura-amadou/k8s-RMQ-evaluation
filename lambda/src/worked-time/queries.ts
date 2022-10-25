@@ -1,4 +1,4 @@
-import { ProjectInfo } from './types'
+import { Work } from './types'
 import { log } from '../utils/logger'
 
 export const selectById = (id: string) => {
@@ -14,7 +14,7 @@ export const updateOrInsert = ({
 }: {
   exist: boolean
   id: string
-  info: ProjectInfo
+  info: Work
   project: string
   uid: string
 }) => {

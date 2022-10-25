@@ -1,8 +1,9 @@
-import { response, forbidden } from '@frenchpastries/millefeuille/response'
 import { selectById, updateOrInsert, listByProject, list, del } from './queries'
+import { response, forbidden } from '@frenchpastries/millefeuille/response'
+import { IncomingRequest } from '@frenchpastries/millefeuille'
 import { log } from '../utils/logger'
 import { client } from '../db'
-import { ProjectInfo } from './types'
+import { Work } from './types'
 
 export const getWorkedTime = async ({ id }: { id: string }) => {
   log({ id })
@@ -19,7 +20,7 @@ export const createOrUpdate = async ({
   uid,
 }: {
   id: string
-  info: ProjectInfo
+  info: Work
   project: string
   uid: string
 }) => {
@@ -36,30 +37,25 @@ export const createOrUpdate = async ({
 export const createOrUpdateWorkTimeHandler = async ({
   body,
   uid,
-}: {
-  body: { id: string; info: ProjectInfo; project: string }
-  uid: string
-}) => {
+}: IncomingRequest) => {
   const { id, info, project } = body
   log(body)
   return createOrUpdate({ id, info, project, uid })
 }
 
-export const getWorkTimeHandler = async ({ location }: { location: any }) => {
-  const id = location.searchParams.get('id')
+export const getWorkTimeHandler = async (request: IncomingRequest) => {
+  const id = request.location?.searchParams.get('id')
   if (id) {
-    return getWorkedTime({ id })
+    return response(getWorkedTime({ id }))
   } else {
     return forbidden('no id')
   }
 }
 
-export const listWorkTimeByProjectHandler = async ({
-  location,
-}: {
-  location: any
-}) => {
-  const project = location.searchParams.get('project')
+export const listWorkTimeByProjectHandler = async (
+  request: IncomingRequest
+) => {
+  const project = request.location?.searchParams.get('project')
   log({ project })
   if (project) {
     const query = listByProject({ project })
@@ -70,8 +66,8 @@ export const listWorkTimeByProjectHandler = async ({
   }
 }
 
-export const listWorkTimeHandler = async ({ location }: { location: any }) => {
-  const owner = location.searchParams.get('owner')
+export const listWorkTimeHandler = async (request: IncomingRequest) => {
+  const owner = request.location?.searchParams.get('owner')
   log({ owner })
   if (owner) {
     const query = list({ owner })
@@ -82,12 +78,8 @@ export const listWorkTimeHandler = async ({ location }: { location: any }) => {
   }
 }
 
-export const deleteWorkTimeHandler = async ({
-  location,
-}: {
-  location: any
-}) => {
-  const id = location.searchParams.get('id')
+export const deleteWorkTimeHandler = async (request: IncomingRequest) => {
+  const id = request.location?.searchParams.get('id')
   log({ id })
   if (id) {
     const query = del({ id })
