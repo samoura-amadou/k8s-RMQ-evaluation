@@ -39,6 +39,7 @@ export const getProjectHandler = async (request: IncomingRequest) => {
       const project = projectRows[0]
       return response(project)
     }
+    return response(null)
   } else {
     return forbidden('no id')
   }

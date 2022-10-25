@@ -49,6 +49,7 @@ export const getTenantHandler = async (request: any) => {
       const project = projectRows[0]
       return response(project)
     }
+    return response(null)
   } else {
     return forbidden('no id')
   }

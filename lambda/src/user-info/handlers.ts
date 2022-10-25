@@ -1,4 +1,5 @@
 import { response, forbidden } from '@frenchpastries/millefeuille/response'
+import { IncomingRequest } from '@frenchpastries/millefeuille'
 import { selectById, updateOrInsert } from './queries'
 import { log } from '../utils/logger'
 import { client } from '../db'
@@ -27,23 +28,20 @@ const createOrUpdate = async ({ id, info }: { id: string; info: UserInfo }) => {
     const tenant = await createOrUpdateTenant({ id, info: {}, owner: id })
     log(tenant)
   }
-  return rows[0].id
+  return rows[0].id as string
 }
 
 export const createOrUpdateUserInfoHandler = async ({
   body,
   uid,
-}: {
-  body: any
-  uid: string
-}) => {
+}: IncomingRequest) => {
   const info = body
   log({ uid, info })
   const data = await createOrUpdate({ id: uid, info })
   return response(data)
 }
 
-export const getUserInfoHandler = async ({ uid }: { uid: string }) => {
+export const getUserInfoHandler = async ({ uid }: IncomingRequest) => {
   if (uid) {
     const data = await getUserInfo({ id: uid })
     return response(data)
