@@ -5,4 +5,4 @@ provider:
   runtime: nodejs12.x
 functions:
   main:
-    handler: build/main.main
+    handler: build/lambda.main
