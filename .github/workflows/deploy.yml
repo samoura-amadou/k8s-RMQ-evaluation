@@ -7,49 +7,49 @@
 #    For example: `aws ecr create-repository --repository-name my-ecr-repo --region us-east-2`.
 #    Replace the value of `ECR_REPOSITORY` in the workflow below with your repository's name.
 #    Replace the value of `aws-region` in the workflow below with your repository's region.
-env:
-  AWS_REGION: eu-west-3
-  ECR_REPOSITORY: time
-  ENVIRONMENT: dev
-
-on:
-  push:
-    branches: [master, preprod, develop]
-
-name: Deploy to Amazon ECR
-
-jobs:
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{env.AWS_REGION}}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build, tag, and push image to Amazon ECR
-        id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{env.ECR_REPOSITORY}}
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          cd server
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/} .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/}
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/}"
-
-      - name: Force update service
-        id: update
-        run: aws ecs update-service --service ${{env.ECR_REPOSITORY}}-timy-service-${{env.ENVIRONMENT}} --cluster cluster-timy-${{env.ENVIRONMENT}} --force-new-deployment
+# env:
+#   AWS_REGION: eu-west-3
+#   ECR_REPOSITORY: time
+#   ENVIRONMENT: dev
+#
+# on:
+#   push:
+#     branches: [master, preprod, develop]
+#
+# name: Deploy to Amazon ECR
+#
+# jobs:
+#   deploy:
+#     name: Deploy
+#     runs-on: ubuntu-latest
+#
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: ${{env.AWS_REGION}}
+#
+#       - name: Login to Amazon ECR
+#         id: login-ecr
+#         uses: aws-actions/amazon-ecr-login@v1
+#
+#       - name: Build, tag, and push image to Amazon ECR
+#         id: build-image
+#         env:
+#           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#           ECR_REPOSITORY: ${{env.ECR_REPOSITORY}}
+#           IMAGE_TAG: ${{ github.sha }}
+#         run: |
+#           cd server
+#           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/} .
+#           docker push $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/}
+#           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/}"
+#
+#       - name: Force update service
+#         id: update
+#         run: aws ecs update-service --service ${{env.ECR_REPOSITORY}}-timy-service-${{env.ENVIRONMENT}} --cluster cluster-timy-${{env.ENVIRONMENT}} --force-new-deployment
