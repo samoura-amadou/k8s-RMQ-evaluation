@@ -1,4 +1,5 @@
-import { Handler, IncomingRequest } from '@frenchpastries/millefeuille'
+import { IncomingRequest } from '@frenchpastries/millefeuille'
+import { Handler } from '@frenchpastries/assemble'
 import chalk from 'chalk'
 
 const strDate = () => {
@@ -84,9 +85,7 @@ const generateLogger = () => {
   return logger
 }
 
-export const onRequest = <Body>(
-  handler: Handler<IncomingRequest<Body>, string>
-) => {
+export const onRequest = <Body>(handler: Handler<Body, string>) => {
   return async (request: IncomingRequest<Body>) => {
     request.logger = generateLogger()
     const result = await handler(request)

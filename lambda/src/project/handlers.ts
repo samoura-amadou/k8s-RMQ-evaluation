@@ -3,6 +3,7 @@ import { selectById, updateOrInsert, listByOwner } from './queries'
 import { log } from '../utils/logger'
 import { client } from '../db'
 import { ProjectInfo } from './types'
+import { IncomingRequest } from '@frenchpastries/millefeuille'
 
 const getProject = async ({ id }: { id: string }) => {
   log({ id })
@@ -12,15 +13,8 @@ const getProject = async ({ id }: { id: string }) => {
   return rows
 }
 
-const createOrUpdate = async ({
-  id,
-  info,
-  owner,
-}: {
-  id: string
-  info: ProjectInfo
-  owner: string
-}) => {
+type CreateOrUpdate = { id: string; info: ProjectInfo; owner: string }
+const createOrUpdate = async ({ id, info, owner }: CreateOrUpdate) => {
   const old = await getProject({ id })
   const exist = old.length > 0
   const query = updateOrInsert({ exist, id, info, owner })
@@ -37,9 +31,9 @@ export const createOrUpdateProjectHandler = async ({ body }: { body: any }) => {
   return createOrUpdate({ id, info, owner })
 }
 
-export const getProjectHandler = async (request: any) => {
+export const getProjectHandler = async (request: IncomingRequest) => {
   const id = request.context.id
-  if (id) {
+  if (id && typeof id === 'string') {
     const projectRows = await getProject({ id })
     if (projectRows && projectRows.length > 0) {
       const project = projectRows[0]
@@ -50,10 +44,10 @@ export const getProjectHandler = async (request: any) => {
   }
 }
 
-export const listProjectByOwnerHandler = async (request: any) => {
+export const listProjectByOwnerHandler = async (request: IncomingRequest) => {
   const owner = request.uid
   log({ owner })
-  if (owner) {
+  if (owner && typeof owner === 'string') {
     const query = listByOwner({ owner })
     const { rows } = await client.query(query)
     return response(rows ?? [])

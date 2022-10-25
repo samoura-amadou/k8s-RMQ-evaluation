@@ -1,7 +1,8 @@
 import { log } from '../utils/logger'
 import { forbidden } from '@frenchpastries/millefeuille/response'
 import jwt from 'jsonwebtoken'
-import { Handler, IncomingRequest } from '@frenchpastries/millefeuille'
+import { IncomingRequest } from '@frenchpastries/millefeuille'
+import { Handler } from '@frenchpastries/assemble'
 
 const check = (bearer: string) =>
   new Promise((resolve, reject) => {
@@ -12,9 +13,7 @@ const check = (bearer: string) =>
     )
   })
 
-export const parseAuth = <Body, Response>(
-  handler: Handler<IncomingRequest<Body>, Response>
-) => {
+export const parseAuth = <Body, Response>(handler: Handler<Body, Response>) => {
   return async (request: IncomingRequest<Body>) => {
     const { headers } = request
     const authorization = headers.authorization || ''
@@ -39,9 +38,7 @@ export const parseAuth = <Body, Response>(
   }
 }
 
-export const guardAuth = <Body, Response>(
-  handler: Handler<IncomingRequest<Body>, Response>
-) => {
+export const guardAuth = <Body, Response>(handler: Handler<Body, Response>) => {
   return async (request: IncomingRequest<Body>) => {
     if (request.authorized) {
       return handler(request)
