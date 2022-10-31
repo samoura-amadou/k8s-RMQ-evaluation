@@ -16,7 +16,7 @@ export const generateProject = (id?: string): Project => ({
   updatedAt: new Date(),
 })
 
-export const generateOwner = (id?: string): UserInfo => ({
+export const generateUserInfo = (id?: string): UserInfo => ({
   id: id ? id : uuid(),
   info: {
     firstName: 'Edgar',

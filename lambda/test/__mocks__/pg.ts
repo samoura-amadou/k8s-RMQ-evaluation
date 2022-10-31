@@ -13,7 +13,7 @@ export class Client {
     console.log(args)
   }
 
-  async query(...args: any) {
+  async query(..._args: any) {
     const rows = result.shift()
     if (rows) return { rows }
     return { rows: [] }

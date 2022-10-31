@@ -1,7 +1,8 @@
 import { describe, expect, test, jest } from '@jest/globals'
-import { generateProject, generateOwner } from '../utils/objects'
+import { generateProject, generateUserInfo } from '../utils/objects'
 import { Project } from '../../src/project/types'
 import { UserInfo } from '../../src/user-info/types'
+import { IncomingRequest } from '@frenchpastries/millefeuille'
 
 jest.mock('pg')
 //@ts-ignore
@@ -19,7 +20,7 @@ describe('project handler', () => {
       createdAt: created_at,
       updatedAt: updated_at,
     }: Project = generateProject()
-    const { info: owner_info, id: owner }: UserInfo = generateOwner()
+    const { info: owner_info, id: owner }: UserInfo = generateUserInfo()
     setResult([[], [{ id, info, owner, owner_info, created_at, updated_at }]])
 
     const body = { id, info, owner }
@@ -37,7 +38,7 @@ describe('project handler', () => {
       createdAt: created_at,
       updatedAt: updated_at,
     }: Project = generateProject()
-    const { info: owner_info, id: owner }: UserInfo = generateOwner()
+    const { info: owner_info, id: owner }: UserInfo = generateUserInfo()
     setResult([
       [{ id, info, owner, owner_info, created_at, updated_at }],
       [{ id, info, owner, owner_info, created_at, updated_at }],
@@ -51,17 +52,17 @@ describe('project handler', () => {
     expect(result.body.owner).toBe(owner)
   })
 
-  test('getProject', async () => {
+  test('get project', async () => {
     const {
       info,
       id,
       createdAt: created_at,
       updatedAt: updated_at,
     }: Project = generateProject()
-    const { info: owner_info, id: owner }: UserInfo = generateOwner()
+    const { info: owner_info, id: owner }: UserInfo = generateUserInfo()
     setResult([[{ id, info, owner, owner_info, created_at, updated_at }]])
 
-    const request = { context: { id } }
+    const request = { context: { id } } as unknown as IncomingRequest
     const result = await getProjectHandler(request)
 
     expect(result.statusCode).toBe(200)
