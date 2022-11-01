@@ -1,4 +1,4 @@
-import { get, post, context } from '@frenchpastries/assemble'
+import { get, post, patch, context } from '@frenchpastries/assemble'
 import {
   createOrUpdateTenantHandler,
   getTenantHandler,
@@ -11,8 +11,8 @@ const tenantHandler = (request: any) => {
   return getTenantHandler(request)
 }
 
-export const tenantContext = context('/tenant', [
-  get('/:id', guardAuth(tenantHandler)),
-  post('/create', guardAuth(createOrUpdateTenantHandler)),
-  post('/update', guardAuth(createOrUpdateTenantHandler)),
+export const tenantContext = context('/tenant', guardAuth, [
+  get('/:id', tenantHandler),
+  post('/create', createOrUpdateTenantHandler),
+  patch('/update', createOrUpdateTenantHandler),
 ])

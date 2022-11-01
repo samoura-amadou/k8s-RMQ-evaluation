@@ -13,17 +13,8 @@ export const getWorkedTime = async ({ id }: { id: string }) => {
   return rows
 }
 
-export const createOrUpdate = async ({
-  id,
-  info,
-  project,
-  uid,
-}: {
-  id: string
-  info: Work
-  project: string
-  uid: string
-}) => {
+export type Create = { id: string; info: Work; project: string; uid: string }
+export const create = async ({ id, info, project, uid }: Create) => {
   const old = await getWorkedTime({ id })
   const exist = old.length > 0
   const query = updateOrInsert({ exist, id, info, project, uid })
@@ -34,18 +25,15 @@ export const createOrUpdate = async ({
   return response(rows[0])
 }
 
-export const createOrUpdateWorkTimeHandler = async ({
-  body,
-  uid,
-}: IncomingRequest) => {
+export const createWorkTimeHandler = async ({ body, uid }: IncomingRequest) => {
   const { id, info, project } = body
   log(body)
-  return createOrUpdate({ id, info, project, uid })
+  return create({ id, info, project, uid })
 }
 
 export const getWorkTimeHandler = async (request: IncomingRequest) => {
-  const id = request.location?.searchParams.get('id')
-  if (id) {
+  const id = request.context.id
+  if (id && typeof id === 'string') {
     return response(getWorkedTime({ id }))
   } else {
     return forbidden('no id')

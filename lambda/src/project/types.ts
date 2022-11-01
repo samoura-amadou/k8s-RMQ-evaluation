@@ -19,7 +19,6 @@ export type ProjectInfo = {
 
 export type Project = {
   id: string
-  work: { [key: string]: Work }
   info: ProjectInfo
   createdAt: Date
   updatedAt: Date
@@ -28,15 +27,6 @@ export type Project = {
 export type Projects = { [key: string]: Project }
 
 export type All = { current: Projects; archived: Projects }
-
-const addDates = (works: { [k: string]: any }) => {
-  const values = Object.entries(works).flatMap(([k, val]) => {
-    const date = new Date(k)
-    if (isNaN(date.getTime())) return []
-    return [[k, { ...val, date }]]
-  })
-  return Object.fromEntries(values)
-}
 
 export const mapper = ([pid, data]: [string, any]) => {
   const cr = data.createdAt ?? data.created_at
@@ -58,7 +48,6 @@ export const mapper = ([pid, data]: [string, any]) => {
   }
   const lowered = pid.toLowerCase()
   const id = lowered
-  const work = addDates(data.work ?? {})
-  const project = { work, id, info, updatedAt, createdAt }
+  const project: Project = { id, info, updatedAt, createdAt }
   return [lowered, project] as [string, Project]
 }

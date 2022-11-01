@@ -5,7 +5,7 @@ import handler, { origin } from './handler'
 
 export const main = async (
   event: APIGatewayEvent,
-  context: Context
+  _context: Context
 ): Promise<APIGatewayProxyResult> => {
   event.location = new URL(event.path, origin())
   if (!event.method) event.method = event.requestContext.http.method

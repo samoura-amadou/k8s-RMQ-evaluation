@@ -14,13 +14,11 @@ connect()
 
 const handler = routes([
   get('/', async () => response('ok')),
-  context('/time', [
-    get('/routes', async () => response(handler.routes())),
-    projectContext,
-    workedTimeContext,
-    userInfoContext,
-    tenantContext,
-  ]),
+  get('/routes', async () => response(handler.routes())),
+  tenantContext,
+  projectContext,
+  workedTimeContext,
+  userInfoContext,
   notFound(async () => ({ statusCode: 404 })),
 ])
 
@@ -33,7 +31,6 @@ export const origin = () => {
   }
 }
 
-console.log(Arrange)
 const withJSONIn = Arrange.json.parse(handler)
 const withJSONOut = Arrange.json.response(withJSONIn)
 const withCors = Arrange.cors.origin(withJSONOut, origin())

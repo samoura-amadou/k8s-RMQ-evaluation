@@ -58,7 +58,8 @@ export const listByOwner = ({ owner }: { owner: string }) => {
         project.info,
         project.owner,
         project.created_at,
-        project.updated_at, user_info.info as owner_info FROM project
+        project.updated_at, user_info.info as owner_info
+      FROM project
       LEFT JOIN user_info ON user_info.id = project.owner
       WHERE project.owner = $1`,
     values: [owner],

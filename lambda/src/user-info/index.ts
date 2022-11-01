@@ -1,9 +1,9 @@
-import { get, post, context } from '@frenchpastries/assemble'
+import { get, post, patch, context } from '@frenchpastries/assemble'
 import { createOrUpdateUserInfoHandler, getUserInfoHandler } from './handlers'
 import { guardAuth } from '../middleware/auth'
 
-export const userInfoContext = context('/user-info', [
-  get('/', guardAuth(getUserInfoHandler)),
-  post('/create', guardAuth(createOrUpdateUserInfoHandler)),
-  post('/update', guardAuth(createOrUpdateUserInfoHandler)),
+export const userInfoContext = context('/user-info', guardAuth, [
+  get('/', getUserInfoHandler),
+  post('/create', createOrUpdateUserInfoHandler),
+  patch('/update', createOrUpdateUserInfoHandler),
 ])

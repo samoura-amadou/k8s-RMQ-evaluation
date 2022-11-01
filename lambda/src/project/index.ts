@@ -1,4 +1,4 @@
-import { get, post, context } from '@frenchpastries/assemble'
+import { get, post, patch, context } from '@frenchpastries/assemble'
 import {
   createOrUpdateProjectHandler,
   getProjectHandler,
@@ -11,8 +11,8 @@ const projectHandler = (request: any) => {
   return getProjectHandler(request)
 }
 
-export const projectContext = context('/project', [
-  get('/:id', guardAuth(projectHandler)),
-  post('/create', guardAuth(createOrUpdateProjectHandler)),
-  post('/update', guardAuth(createOrUpdateProjectHandler)),
+export const projectContext = context('/project', guardAuth, [
+  get('/:id', projectHandler),
+  post('/create', createOrUpdateProjectHandler),
+  patch('/update', createOrUpdateProjectHandler),
 ])
