@@ -4,9 +4,6 @@ import { v4 as uuid } from 'uuid'
 
 export const generateProject = (id?: string): Project => ({
   id: id ? id : uuid(),
-  work: {
-    time: { category: 'cat', hours: 2, id: 'WID', date: new Date() },
-  },
   info: {
     name: 'Test',
     color: 'blue',

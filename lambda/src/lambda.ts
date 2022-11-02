@@ -7,7 +7,8 @@ export const main = async (
   event: APIGatewayEvent,
   _context: Context
 ): Promise<APIGatewayProxyResult> => {
-  event.location = new URL(event.path, origin())
+  log(event)
+  event.location = new URL(event.rawPath, origin())
   if (!event.method) event.method = event.requestContext.http.method
   const res = (await handler(event)) || {}
   log(JSON.stringify(res))
