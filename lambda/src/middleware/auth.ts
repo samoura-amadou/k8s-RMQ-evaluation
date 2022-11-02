@@ -20,6 +20,7 @@ export const parseAuth = <Body, Response>(handler: Handler<Body, Response>) => {
     if (authorization.startsWith('Bearer')) {
       return check(authorization.replace(/^Bearer\s+/, ''))
         .then((decoded: any) => {
+          console.log(decoded)
           const uid = decoded.sub
           request.authorized = true
           request.decoded = decoded

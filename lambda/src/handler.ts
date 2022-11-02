@@ -27,7 +27,7 @@ export const origin = () => {
   if (process.env.FRONT_HOSTNAME) {
     return process.env.FRONT_HOSTNAME
   } else {
-    return 'http://localhost:3000'
+    return 'http://localhost:5173'
   }
 }
 

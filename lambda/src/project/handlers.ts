@@ -34,7 +34,7 @@ export const createOrUpdateProjectHandler = async ({ body }: { body: any }) => {
 export const getProjectHandler = async (request: IncomingRequest) => {
   const id = request.context.id
   if (id && typeof id === 'string') {
-    const projectRows = await getProject({ id })
+    const projectRows = await getProject({ id: decodeURIComponent(id) })
     if (projectRows && projectRows.length > 0) {
       const project = projectRows[0]
       return response(project)
