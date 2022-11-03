@@ -1,5 +1,12 @@
 import { response, forbidden } from '@frenchpastries/millefeuille/response'
-import { selectById, updateOrInsert, listByOwner } from './queries'
+import {
+  selectById,
+  updateOrInsert,
+  listByOwner,
+  removeMembers,
+  addMembers,
+  listByMember,
+} from './queries'
 import { IncomingRequest } from '@frenchpastries/millefeuille'
 import { log } from '../utils/logger'
 import { ProjectInfo } from './types'
@@ -54,5 +61,54 @@ export const listProjectByOwnerHandler = async (request: IncomingRequest) => {
     return response(rows ?? [])
   } else {
     return forbidden('no owner')
+  }
+}
+
+export const removeMembersHandler = async (request: IncomingRequest) => {
+  const uid = request.uid
+  const member = request.body.uid
+  const id = request.context.id
+  log(member, id)
+  if (member && id) {
+    const query = removeMembers({ id, member })
+    const res = await client.query(query)
+    return response(res.rows)
+  } else return forbidden('no data')
+}
+
+export const addMembersHandler = async (request: IncomingRequest) => {
+  const uid = request.uid
+  const member = request.body.uid
+  const id = request.context.id
+  log(member, id)
+  if (member && id) {
+    const query = addMembers({ id, member })
+    const res = await client.query(query)
+    return response(res.rows)
+  } else return forbidden('no data')
+}
+
+export const getProjectMembers = async (request: IncomingRequest) => {
+  const id = request.context.id
+  log(id)
+  if (id) {
+    const query = selectById(id)
+    const res = await client.query(query)
+    if (res.rows.length > 0) return response(res.rows[0].members)
+    return forbidden('no tenant')
+  } else return forbidden('no owner')
+}
+
+export const listProjectByOwnerAndMemberHandler = async (
+  request: IncomingRequest
+) => {
+  const member = request.uid
+  log({ member })
+  if (member) {
+    const query = listByMember({ member })
+    const { rows } = await client.query(query)
+    return response(rows ?? [])
+  } else {
+    return forbidden('no id')
   }
 }

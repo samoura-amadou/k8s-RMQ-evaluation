@@ -3,6 +3,10 @@ import {
   createOrUpdateProjectHandler,
   getProjectHandler,
   listProjectByOwnerHandler,
+  addMembersHandler,
+  removeMembersHandler,
+  getProjectMembers,
+  listProjectByOwnerAndMemberHandler,
 } from './handlers'
 import { guardAuth } from '../middleware/auth'
 
@@ -12,7 +16,16 @@ const projectHandler = (request: any) => {
 }
 
 export const projectContext = context('/project', guardAuth, [
-  get('/:id', projectHandler),
+  get('/', listProjectByOwnerAndMemberHandler),
+  get('/owner', listProjectByOwnerHandler),
+  context('/:id', [
+    get('/', projectHandler),
+    context('/members', [
+      post('/add', addMembersHandler),
+      post('/remove', removeMembersHandler),
+      get('/', getProjectMembers),
+    ]),
+  ]),
   post('/create', createOrUpdateProjectHandler),
   patch('/update', createOrUpdateProjectHandler),
 ])
