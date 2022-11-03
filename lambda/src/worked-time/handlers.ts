@@ -17,7 +17,7 @@ export type Create = { id: string; info: Work; project: string; uid: string }
 export const create = async ({ id, info, project, uid }: Create) => {
   const old = await getWorkedTime({ id })
   const exist = old.length > 0
-  const query = updateOrInsert({ exist, id, info, project, uid })
+  const query = updateOrInsert({ exist, id, info, project, owner: uid })
   log(query)
   const { rows } = await client.query(query)
   log(rows)

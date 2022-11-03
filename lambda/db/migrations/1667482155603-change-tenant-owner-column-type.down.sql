@@ -1,0 +1,1 @@
+ALTER TABLE tenant ALTER COLUMN owner TYPE uuid;
