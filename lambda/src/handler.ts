@@ -31,12 +31,12 @@ export const origin = () => {
   }
 }
 
-const withJSONIn = Arrange.json.parse(handler)
-const withJSONOut = Arrange.json.response(withJSONIn)
-const withCors = Arrange.cors.origin(withJSONOut, origin())
-const withLogger = onRequest(withCors)
-const withAuth = parseAuth(withLogger)
+const withAuth = parseAuth(handler)
+const withLogger = onRequest(withAuth)
+const withJSONOut = Arrange.json.response(withLogger)
+const withJSONIn = Arrange.json.parse(withJSONOut)
+const withCors = Arrange.cors.origin(withJSONIn, origin())
 
 console.log('--> Routes: ', handler.routes())
 
-export default withAuth
+export default withCors
