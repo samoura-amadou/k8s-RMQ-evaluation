@@ -60,3 +60,51 @@ export const listByOwner = ({ owner }: { owner: string }) => {
     values: [owner],
   }
 }
+
+export const listByMember = ({ member }: { member: string }) => {
+  log('list', { member })
+  return {
+    text: `SELECT
+        tenant.id,
+        tenant.info,
+        tenant.owner,
+        tenant.created_at,
+        tenant.updated_at,
+        tenant.members,
+        user_info.info as owner_info
+      FROM tenant
+      LEFT JOIN user_info ON user_info.id = tenant.owner
+      WHERE tenant.members::jsonb ? $1`,
+    values: [member],
+  }
+}
+
+export const addMembers = ({ id, member }: { id: string; member: string }) => {
+  log('add member', { id, member })
+
+  return {
+    text: `UPDATE tenant
+            SET members = members::jsonb || $2::jsonb
+            WHERE id = $1
+            RETURNING id, members`,
+    values: [id, JSON.stringify([member])],
+  }
+}
+
+export const removeMembers = ({
+  id,
+  member,
+}: {
+  id: string
+  member: string
+}) => {
+  log('remove member', { id, member })
+
+  return {
+    text: `UPDATE tenant
+            SET members = members::jsonb - $2
+            WHERE id = $1
+            RETURNING id, members`,
+    values: [id, member],
+  }
+}

@@ -3,6 +3,10 @@ import {
   createOrUpdateTenantHandler,
   getTenantHandler,
   listTenantByOwnerHandler,
+  addMembersHandler,
+  removeMembersHandler,
+  getTenantMembers,
+  listTenantByOwnerAndMemberHandler,
 } from './handlers'
 import { guardAuth } from '../middleware/auth'
 
@@ -12,7 +16,16 @@ const tenantHandler = (request: any) => {
 }
 
 export const tenantContext = context('/tenant', guardAuth, [
-  get('/:id', tenantHandler),
+  get('/', listTenantByOwnerAndMemberHandler),
+  get('/owner', listTenantByOwnerHandler),
+  context('/:id', [
+    get('/', tenantHandler),
+    context('/members', [
+      post('/add', addMembersHandler),
+      post('/remove', removeMembersHandler),
+      get('/', getTenantMembers),
+    ]),
+  ]),
   post('/create', createOrUpdateTenantHandler),
   patch('/update', createOrUpdateTenantHandler),
 ])
