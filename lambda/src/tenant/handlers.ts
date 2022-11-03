@@ -79,7 +79,7 @@ export const listTenantByOwnerHandler = async (request: IncomingRequest) => {
 }
 
 export const removeMembersHandler = async (request: IncomingRequest) => {
-  const uid = request.uid
+  const uid = request.uid //// TODO: verify that uid is able to modify the project
   const member = request.body.uid
   const id = request.context.id
   log(member, id)
@@ -91,7 +91,7 @@ export const removeMembersHandler = async (request: IncomingRequest) => {
 }
 
 export const addMembersHandler = async (request: IncomingRequest) => {
-  const uid = request.uid
+  const uid = request.uid //// TODO: verify that uid is able to modify the project
   const member = request.body.uid
   const id = request.context.id
   log(member, id)
