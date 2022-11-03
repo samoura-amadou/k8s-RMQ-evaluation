@@ -8,13 +8,13 @@ CREATE TABLE public.project (
     owner text NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    members json
+    members json DEFAULT to_json('[]'::text)
 );
 CREATE TABLE public.tenant (
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     info json,
     owner text NOT NULL,
-    members json,
+    members json DEFAULT to_json('[]'::text),
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
 );
