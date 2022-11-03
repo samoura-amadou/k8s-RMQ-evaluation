@@ -37,7 +37,8 @@
     "test": "jest",
     "dev": "ts-node src/main",
     "clean": "rm -rf build",
-    "build": "clean & compile",
-    "migrate": "caravel migrate"
+    "build": "yarn clean && yarn compile",
+    "migrate": "caravel migrate",
+    "deploy": "yarn build && sls deploy"
   }
 }
