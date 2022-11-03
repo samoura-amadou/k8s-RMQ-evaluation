@@ -1,17 +1,19 @@
-import { get, post, del, context } from '@frenchpastries/assemble'
+import { get, post, context } from '@frenchpastries/assemble'
 import {
   listWorkTimeByProjectHandler,
   createWorkTimeHandler,
   getWorkTimeHandler,
   listWorkTimeHandler,
-  deleteWorkTimeHandler,
+  historyWorkTimeByProjectHandler,
 } from './handlers'
 import { guardAuth } from '../middleware/auth'
 
 export const workedTimeContext = context('/worked-time', guardAuth, [
-  get('/project', listWorkTimeByProjectHandler),
+  context('/project/:id', [
+    get('/', listWorkTimeByProjectHandler),
+    get('/history', historyWorkTimeByProjectHandler),
+  ]),
   get('/all', listWorkTimeHandler),
   post('/create', createWorkTimeHandler),
-  del('/delete', deleteWorkTimeHandler),
   get('/:id', getWorkTimeHandler),
 ])

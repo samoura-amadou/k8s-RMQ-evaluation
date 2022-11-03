@@ -1,4 +1,10 @@
-import { selectById, updateOrInsert, listByProject, list, del } from './queries'
+import {
+  selectById,
+  updateOrInsert,
+  listByProject,
+  list,
+  listLastUpdated,
+} from './queries'
 import { response, forbidden } from '@frenchpastries/millefeuille/response'
 import { IncomingRequest } from '@frenchpastries/millefeuille'
 import { log } from '../utils/logger'
@@ -13,11 +19,9 @@ export const getWorkedTime = async ({ id }: { id: string }) => {
   return rows
 }
 
-export type Create = { id: string; info: Work; project: string; uid: string }
-export const create = async ({ id, info, project, uid }: Create) => {
-  const old = await getWorkedTime({ id })
-  const exist = old.length > 0
-  const query = updateOrInsert({ exist, id, info, project, owner: uid })
+export type Create = { info: Work; project: string; uid: string }
+export const create = async ({ info, project, uid }: Create) => {
+  const query = updateOrInsert({ info, project, owner: uid })
   log(query)
   const { rows } = await client.query(query)
   log(rows)
@@ -26,9 +30,9 @@ export const create = async ({ id, info, project, uid }: Create) => {
 }
 
 export const createWorkTimeHandler = async ({ body, uid }: IncomingRequest) => {
-  const { id, info, project } = body
+  const { info, project } = body
   log(body)
-  return create({ id, info, project, uid })
+  return create({ info, project, uid })
 }
 
 export const getWorkTimeHandler = async (request: IncomingRequest) => {
@@ -43,7 +47,21 @@ export const getWorkTimeHandler = async (request: IncomingRequest) => {
 export const listWorkTimeByProjectHandler = async (
   request: IncomingRequest
 ) => {
-  const project = request.location?.searchParams.get('project')
+  const project = request.context.id
+  log({ project })
+  if (project) {
+    const query = listLastUpdated({ project })
+    const { rows } = await client.query(query)
+    return response(rows ?? [])
+  } else {
+    return forbidden('no project id')
+  }
+}
+
+export const historyWorkTimeByProjectHandler = async (
+  request: IncomingRequest
+) => {
+  const project = request.context.id
   log({ project })
   if (project) {
     const query = listByProject({ project })
@@ -55,7 +73,7 @@ export const listWorkTimeByProjectHandler = async (
 }
 
 export const listWorkTimeHandler = async (request: IncomingRequest) => {
-  const owner = request.location?.searchParams.get('owner')
+  const owner = request.uid
   log({ owner })
   if (owner) {
     const query = list({ owner })
@@ -63,17 +81,5 @@ export const listWorkTimeHandler = async (request: IncomingRequest) => {
     return response(rows ?? [])
   } else {
     return forbidden('no owner')
-  }
-}
-
-export const deleteWorkTimeHandler = async (request: IncomingRequest) => {
-  const id = request.location?.searchParams.get('id')
-  log({ id })
-  if (id) {
-    const query = del({ id })
-    await client.query(query)
-    return response(true)
-  } else {
-    return forbidden('no id')
   }
 }

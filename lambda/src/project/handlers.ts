@@ -32,8 +32,11 @@ const createOrUpdate = async ({ id, info, owner }: CreateOrUpdate) => {
   return response(rows[0])
 }
 
-export const createOrUpdateProjectHandler = async ({ body }: { body: any }) => {
-  const { id, info, owner } = body
+export const createOrUpdateProjectHandler = async (
+  request: IncomingRequest
+) => {
+  const owner = request.uid
+  const { id, info } = request.body
   log({ id, info, owner })
   return createOrUpdate({ id, info, owner })
 }
