@@ -11,7 +11,7 @@ CREATE TABLE public.project (
     members json DEFAULT to_json('[]'::text)
 );
 CREATE TABLE public.tenant (
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    id text DEFAULT public.uuid_generate_v4() NOT NULL,
     info json,
     owner text NOT NULL,
     members json DEFAULT to_json('[]'::text),
