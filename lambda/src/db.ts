@@ -32,5 +32,3 @@ export const connect = async () => {
 export const end = async () => {
   await client.end()
 }
-
-export const query = (...args: any) => client.query(args)
