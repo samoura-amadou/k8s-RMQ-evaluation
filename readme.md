@@ -8,3 +8,5 @@ And install docker
 
 Work in progress ( I swear )
 you suck heroku
+
+## Now deployed on lambda woah
