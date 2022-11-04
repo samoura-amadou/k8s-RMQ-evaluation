@@ -39,6 +39,7 @@
     "clean": "rm -rf build",
     "build": "yarn clean && yarn compile",
     "migrate": "caravel migrate",
-    "deploy": "yarn build && sls deploy"
+    "deploy": "yarn build && sls deploy",
+    "ci": "yarn migrate && yarn build"
   }
 }
