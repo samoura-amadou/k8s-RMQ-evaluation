@@ -44,9 +44,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn
-      - run: npm test
+      - run: yarn test
       - run: cp .env.production .env
-      - run: npm ci
+      - run: yarn migrate
+      - run: yarn compile
       - name: serverless deploy
         uses: serverless/github-action@v3.1
         with:
