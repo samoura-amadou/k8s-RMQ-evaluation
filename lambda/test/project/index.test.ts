@@ -22,9 +22,10 @@ describe('project handler', () => {
     }: Project = generateProject()
     const { info: owner_info, id: owner }: UserInfo = generateUserInfo()
     setResult([[], [{ id, info, owner, owner_info, created_at, updated_at }]])
-
+    const uid = 'userID'
     const body = { id, info, owner }
-    const result = await createOrUpdateProjectHandler({ body })
+    const request = { body, uid } as unknown as IncomingRequest
+    const result = await createOrUpdateProjectHandler(request)
 
     expect(result.statusCode).toBe(200)
     expect(result.body.id).toBe(id)
@@ -44,8 +45,10 @@ describe('project handler', () => {
       [{ id, info, owner, owner_info, created_at, updated_at }],
     ])
 
+    const uid = 'userID'
     const body = { id, info, owner }
-    const result = await createOrUpdateProjectHandler({ body })
+    const request = { body, uid } as unknown as IncomingRequest
+    const result = await createOrUpdateProjectHandler(request)
 
     expect(result.statusCode).toBe(200)
     expect(result.body.id).toBe(id)
