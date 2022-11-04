@@ -47,4 +47,5 @@ jobs:
       - run: yarn test
       - run: cp .env.production .env
       - run: yarn migrate
+      - run: yarn global add serverless
       - run: yarn deploy
