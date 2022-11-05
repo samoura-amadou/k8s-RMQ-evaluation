@@ -119,9 +119,10 @@ export const listTenantByOwnerAndMemberHandler = async (
   const member = request.uid
   log({ member })
   if (member) {
-    const query = listByMember({ member })
-    const { rows } = await client.query(query)
-    return response(rows ?? [])
+    const byMembers = await client.query(listByMember({ member }))
+    const byOwner = await client.query(listByOwner({ owner: member }))
+    const data = [...(byMembers.rows ?? []), ...(byOwner.rows ?? [])]
+    return response(data.map(d => ({ ...d, members: JSON.parse(d.members) })))
   } else {
     return forbidden('no id')
   }

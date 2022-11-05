@@ -17,19 +17,19 @@ export const updateOrInsert = ({
   if (exist) {
     log('update', { id, info })
     return {
-      text: 'UPDATE user_info SET info = $2 WHERE id = $1 RETURNING id',
+      text: 'UPDATE user_info SET info = $2 WHERE id = $1 RETURNING id, info',
       values: [id, info],
     }
   } else {
     log('create', { id, info })
     if (id) {
       return {
-        text: 'INSERT INTO user_info (id, info) VALUES ($1, $2) RETURNING id',
+        text: 'INSERT INTO user_info (id, info) VALUES ($1, $2) RETURNING id, info',
         values: [id, info],
       }
     } else {
       return {
-        text: 'INSERT INTO user_info (info) VALUES ($1) RETURNING id',
+        text: 'INSERT INTO user_info (info) VALUES ($1) RETURNING id, info',
         values: [info],
       }
     }

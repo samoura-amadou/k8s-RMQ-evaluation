@@ -15,6 +15,14 @@ const getUserInfo = async ({ id }: { id: string }) => {
   return data
 }
 
+const createUserTenant = async (id: string, row: any) => {
+  log('create tenant')
+  const { firstName, lastName } = row.info
+  const info = { name: [firstName, lastName].join(' ') }
+  const tenant = await createOrUpdateTenant({ id, info, owner: id })
+  log(tenant)
+}
+
 const createOrUpdate = async ({ id, info }: { id: string; info: UserInfo }) => {
   const old = await getUserInfo({ id })
   const exist = Boolean(old)
@@ -23,19 +31,13 @@ const createOrUpdate = async ({ id, info }: { id: string; info: UserInfo }) => {
   const { rows } = await client.query(query)
   log(rows)
   log('done')
-  if (!exist) {
-    log('create tenant')
-    const tenant = await createOrUpdateTenant({ id, info: {}, owner: id })
-    log(tenant)
-  }
+  if (!exist) await createUserTenant(id, rows[0])
   return rows[0].id as string
 }
 
-export const createOrUpdateUserInfoHandler = async ({
-  body,
-  uid,
-}: IncomingRequest) => {
-  const info = body
+export const createOrUpdateUserInfoHandler = async (req: IncomingRequest) => {
+  const info = req.body
+  const uid = req.uid
   log({ uid, info })
   const data = await createOrUpdate({ id: uid, info })
   return response(data)

@@ -1,6 +1,12 @@
-import { response } from '@frenchpastries/millefeuille/response'
+import { response, internalError } from '@frenchpastries/millefeuille/response'
 import * as Arrange from '@frenchpastries/arrange'
-import { get, notFound, context, routes } from '@frenchpastries/assemble'
+import {
+  get,
+  notFound,
+  context,
+  routes,
+  Middleware,
+} from '@frenchpastries/assemble'
 import { connect } from './db'
 import { projectContext } from './project'
 import { workedTimeContext } from './worked-time'
@@ -31,8 +37,17 @@ export const origin = () => {
   }
 }
 
+const catchErrors: Middleware = handler => async request => {
+  try {
+    return await handler(request)
+  } catch (error) {
+    return internalError(JSON.stringify(error))
+  }
+}
+
 const withAuth = parseAuth(handler)
-const withLogger = onRequest(withAuth)
+const withCatch = catchErrors(withAuth)
+const withLogger = onRequest(withCatch)
 const withJSONOut = Arrange.json.response(withLogger)
 const withJSONIn = Arrange.json.parse(withJSONOut)
 const withCors = Arrange.cors.origin(withJSONIn, origin())
