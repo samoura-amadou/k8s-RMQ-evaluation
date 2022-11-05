@@ -958,10 +958,10 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@frenchpastries/arrange@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@frenchpastries/arrange/-/arrange-1.0.0.tgz#413c66746e6638acb232ce1c6c4fa6251a1a0e02"
-  integrity sha512-/2mzyh9eymQFh75P42nzbMdryTyfl8izOZeEr3ZmBdydzkBX2NqXbVy368dHZagUPtPepsjkMrTGBpu9h4/j2Q==
+"@frenchpastries/arrange@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@frenchpastries/arrange/-/arrange-1.0.1.tgz#b4ed8a58ff68789550cf9944cdfbefece18fd68b"
+  integrity sha512-mussEuTCH9V0fQ1zY3kdP1s+7i6qxbHOasOZi9zq3HmKeg1UhJGH1ZhXOcpyDZvjkkV1HcDX+WAlDvRg6tfytQ==
 
 "@frenchpastries/assemble@^1.0.0":
   version "1.0.0"
