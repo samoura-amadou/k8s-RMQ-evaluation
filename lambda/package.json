@@ -39,6 +39,7 @@
     "clean": "rm -rf build",
     "build": "yarn clean && yarn compile",
     "migrate": "caravel migrate",
-    "deploy": "yarn build && serverless deploy"
+    "deploy": "yarn build && serverless deploy",
+    "seed": "node ../scripts/seed"
   }
 }
