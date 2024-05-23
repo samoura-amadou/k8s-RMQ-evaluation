@@ -17,6 +17,12 @@ Vous allez travailler tous sur le même cluster. Il est donc important de créer
 C'est également important pour les `labels selector` pour éviter les collisions entre le travail de deux élèves.
 (un service qui cible des pods de deux personnes par exemple).
 
+### Images docker
+
+Pour utiliser vos images docker dans le cluster il est conseillé d'utiliser un registre docker distant.
+
+Comme dockerhub, une version publique de l'image fera l'affaire.
+
 ### Le projet
 
 Le code fourni est un code de serveur en `Node.js` permettant de compter des occurences à partir d'une queue `RabbitMQ` et de stocker la valeurs courantes dans une base de données `PostgreSQL`.
