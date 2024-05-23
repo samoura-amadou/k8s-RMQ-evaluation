@@ -1,1 +1,0 @@
-ALTER TABLE tenant ALTER COLUMN owner TYPE text;

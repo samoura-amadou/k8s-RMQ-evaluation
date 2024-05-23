@@ -1,1 +1,0 @@
-ALTER TABLE tenant ALTER COLUMN id TYPE uuid;

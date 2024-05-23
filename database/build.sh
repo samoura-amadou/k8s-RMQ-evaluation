@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build -t timy-database .
+docker build -t counter-database .

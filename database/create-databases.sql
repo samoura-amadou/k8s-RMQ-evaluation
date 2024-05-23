@@ -1,4 +1,4 @@
-create user timy;
-create database timy;
-grant all privileges on database timy to timy;
-alter user timy with superuser;
+create user count;
+create database count;
+grant all privileges on database count to count;
+alter user count with superuser;
