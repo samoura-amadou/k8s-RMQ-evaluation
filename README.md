@@ -96,3 +96,4 @@ kubectl create -f file.yaml
 kubectl delete -f file.yaml
 kubectl apply -f file.yaml
 ```
+# k8s-RMQ-evaluation
