@@ -1,4 +1,64 @@
-# Examen
+# Examen : 
+## Déploiement d'une application Node.js avec RabbitMQ et PostgreSQL sur Kubernetes
+
+Voici les commandes pour réaliser ce projet :
+
+
+Rappel : Pour utiliser un fichier YAML, il suffit de remplacer `<nom-du-fichier.yaml>` par le nom du fichier YAML.
+        Dans mon cas, j'ai utilisé les fichiers `rabbitmq.yaml`, `database/postgresql.yaml` et `backend/deployment.yaml`.
+        Mon namespace est `samoura`.
+
+
+1. **Créer un namespace :**
+```bash
+kubectl create namespace <nom-du-namespace>
+```
+
+2. **Déployer RabbitMQ :**
+```bash
+kubectl create -f rabbitmq.yaml --namespace=<nom-du-namespace>
+```
+
+3. **Déployer PostgreSQL :**
+```bash
+kubectl create -f database/postgresql.yaml --namespace=<nom-du-namespace>
+```
+
+4. **Déployer le serveur Node.js :**
+```bash
+kubectl create -f backend/deployment.yaml --namespace=<nom-du-namespace>
+```
+
+5. **Ajouter un autoscaler pour le serveur :**
+```bash
+kubectl autoscale deployment <nom-du-deploiement> --min=<nombre-minimum-de-replicas> --max=<nombre-maximum-de-replicas> --cpu-percent=<pourcentage-d-utilisation-de-CPU> --namespace=<nom-du-namespace>
+```
+
+6. **Vérifier les ressources déployées :**
+```bash
+kubectl get pods --namespace=<nom-du-namespace>
+kubectl get services --namespace=<nom-du-namespace>
+kubectl get deployments --namespace=<nom-du-namespace>
+kubectl get namespace --namespace=<nom-du-namespace>
+```
+
+7. **Récupérer les logs d'un pod :**
+```bash
+kubectl logs <nom-du-pod> --namespace=<nom-du-namespace>
+```
+
+8. **Utiliser un fichier YAML pour créer, supprimer ou appliquer des ressources :**
+```bash
+kubectl create -f <nom-du-fichier.yaml>
+kubectl delete -f <nom-du-fichier.yaml>
+kubectl apply -f <nom-du-fichier.yaml>
+```
+
+
+
+
+...................................................................................................................................
+
 
 ## Prérequis
 
