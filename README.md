@@ -5,7 +5,7 @@
 Récupérer le fichier kubeconfig.yml
 
 ```SH
-export KUBECONFIG=<absolute-path-to>/kubeconfig.yml
+export KUBECONFIG=C:\Users\samou\.kube/kubeconfig.yml
 ```
 
 Vous allez utiliser un cluster distant, il ne faut donc pas utiliser de commandes commençant par `minikube`.
